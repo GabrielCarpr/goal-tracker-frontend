@@ -1,28 +1,41 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <DesktopMenu></DesktopMenu>
+    <Frame title="Hello World"><router-view></router-view></Frame>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import DesktopMenu from "@/components/DesktopMenu";
+import Frame from "@/components/Frame";
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    DesktopMenu, 
+    Frame
   }
 }
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Roboto';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+
+  --main-blue: #191d73;
+  --main-blue-highlight: #2B2F99;
+  --dark-blue: #0E103F;
+  --light-grey: #F1F1F3;
+  --dark-grey: #C3C4CC;
+  --mid-grey: #E1E1E6;
+
+  background-color: VAR(--light-grey);
 }
 </style>

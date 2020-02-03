@@ -5,6 +5,22 @@ Vue.use(Router);
 
 export default new Router({
     routes: [
-        
+        {
+            path: "/",
+            name: "Dashboard",
+            component: () => import("@/views/Dashboard")
+        },
+        {
+            path: "/goals",
+            name: "goals"
+        },
+        {
+            path: "/visions",
+            name: "visions"
+        },
+        {
+            path: "/affirmations",
+            name: "affirmations"
+        }
     ]
 })
