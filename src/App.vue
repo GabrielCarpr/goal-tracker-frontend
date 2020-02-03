@@ -1,20 +1,13 @@
 <template>
   <div id="app">
-    <DesktopMenu></DesktopMenu>
-    <Frame title="Hello World"><router-view></router-view></Frame>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import DesktopMenu from "@/components/DesktopMenu";
-import Frame from "@/components/Frame";
 
 export default {
   name: 'app',
-  components: {
-    DesktopMenu, 
-    Frame
-  }
 }
 </script>
 

@@ -31,12 +31,6 @@
 
 <script>
 export default {
-    name: "Frame",
-    props: {
-        title: {
-            type: String,
-            required: true
-        }
-    }
+    name: "Frame"
 }
 </script>

@@ -8,13 +8,13 @@
             <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Dashboard'}" @click="link('Dashboard')">
                 <img src="dash_icon.svg"><span class="menu-item">Dashboard</span>
             </span>
-            <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Goals'}" @click="this.link('Goals')">
+            <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Goals'}" @click="link('Goals')">
                 <img src="goals_icon.svg"><span class="menu-item">Goals</span>
                 </span>
-            <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Vision'}" @click="this.link('Vision')">
+            <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Vision'}" @click="link('Vision')">
                 <img src="vision_icon.svg"><span class="menu-item">Vision board</span>
             </span>
-            <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Affirmations'}" @click="this.link('Affirmations')">
+            <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Affirmations'}" @click="link('Affirmations')">
                 <img src="affirmations_icon.svg"><span class="menu-item">Affirmations</span>
             </span>
         </div>
@@ -25,7 +25,7 @@
     #side-menu {
         height: 100vh;
         width: 250px;
-        position: absolute;
+        position: fixed;
         left: 0;
         top: 0;
         background-color: VAR(--main-blue);
@@ -95,7 +95,8 @@
 </style>
 
 <script>
-import router from "router";
+import router from "@/router/";
+
 
 export default {
     name: "DesktopMenu",

@@ -21,6 +21,11 @@ export default new Router({
         {
             path: "/affirmations",
             name: "affirmations"
+        },
+        {
+            name: "Login",
+            path: "/login",
+            component: () => import("@/views/Login")
         }
     ]
 })
