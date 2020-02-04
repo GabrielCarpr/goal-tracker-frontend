@@ -16,7 +16,8 @@ export default new Router({
         },
         {
             path: "/visions",
-            name: "visions"
+            name: "Vision board",
+            component: () => import("@/views/Visions")
         },
         {
             path: "/affirmations",

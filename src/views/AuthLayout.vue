@@ -25,6 +25,7 @@ export default {
 	#form {
 		width: 500px;
 		height: auto;
+		margin: 0 20px;
 	}
 
 	h1 {

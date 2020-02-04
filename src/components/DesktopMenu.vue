@@ -9,9 +9,9 @@
                 <img src="dash_icon.svg"><span class="menu-item">Dashboard</span>
             </span>
             <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Goals'}" @click="link('Goals')">
-                <img src="goals_icon.svg"><span class="menu-item">Goals</span>
+                <img src="goals_icon.svg"><span class="menu-item">Goals</span><span class="new-goal">&plus;</span>
                 </span>
-            <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Vision'}" @click="link('Vision')">
+            <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Vision'}" @click="link('Vision board')">
                 <img src="vision_icon.svg"><span class="menu-item">Vision board</span>
             </span>
             <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Affirmations'}" @click="link('Affirmations')">
@@ -49,6 +49,9 @@
         padding: 10px;
         transition: background-color ease 200ms;
         cursor: pointer;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
     }
 
     .menu-item-box:hover {
@@ -67,8 +70,23 @@
         margin-right: 15px;
     }
 
-    .menu-item {
-        margin: auto auto;
+    .new-goal {
+        margin-left: auto;
+        margin-right: 0;
+        text-align: center;
+        vertical-align: center;
+        color: VAR(--dark-blue);
+        background-color: VAR(--main-blue-highlight);
+        padding: 3px 7px;
+        border-radius: 50%;
+        width: 17px;
+        transition: background, color ease 500ms;
+    }
+
+    .new-goal:hover {
+        background-color: VAR(--main-blue);
+        color: VAR(--main-blue-highlight);
+        transition: background-color, color ease 500ms;
     }
 
     #profile {
