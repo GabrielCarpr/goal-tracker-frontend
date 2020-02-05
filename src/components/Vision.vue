@@ -27,6 +27,7 @@ export default {
 		justify-content: space-between;
 		flex-direction: column;
 		position: relative;
+		margin-bottom: 50px;
 	}
 
 	.vision-img {

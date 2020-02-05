@@ -28,9 +28,8 @@ export default {
 
 <style scoped>
 	.visions-holder {
-		display: grid;
-		grid-gap: 50px;
-		columns: 4;
-		justify-content: space-evenly;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
 	}
 </style>

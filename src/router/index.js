@@ -21,7 +21,8 @@ export default new Router({
         },
         {
             path: "/affirmations",
-            name: "affirmations"
+            name: "Affirmations",
+            component: () => import("@/views/Affirmations")
         },
         {
             name: "Login",

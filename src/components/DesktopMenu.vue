@@ -11,7 +11,7 @@
             <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Goals'}" @click="link('Goals')">
                 <img src="goals_icon.svg"><span class="menu-item">Goals</span><span class="new-goal">&plus;</span>
                 </span>
-            <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Vision'}" @click="link('Vision board')">
+            <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Vision board'}" @click="link('Vision board')">
                 <img src="vision_icon.svg"><span class="menu-item">Vision board</span>
             </span>
             <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Affirmations'}" @click="link('Affirmations')">
@@ -48,6 +48,7 @@
         text-align: left;
         padding: 10px;
         transition: background-color ease 200ms;
+        background-color: transparent;
         cursor: pointer;
         display: flex;
         justify-content: flex-start;
@@ -59,6 +60,7 @@
     }
 
     .menu-active {
+        transition: background-color ease 300ms;
         background-color: VAR(--dark-blue);
     }
 
