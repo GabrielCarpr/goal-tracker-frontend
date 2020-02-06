@@ -2,6 +2,7 @@
 	opacity: 1;
 	transition: opacity linear 0.2s;
 	position: relative;
+	z-index: 100;
 }
 
 .spinner-padding {
@@ -19,11 +20,11 @@
 	top: 50%;
 	left: 50%;
 	border-radius: 50%;
-	border: 3px solid VAR(--main-blue);
+	border: 3px solid VAR(--dark-grey);
 	border-bottom-color: VAR(--main-blue-highlight);
 	background-color: transparent;
 	transform: translate3d(-50%, -50%, 0);
-	animation: 2s linear infinite spinner;
+	animation: 1500ms linear infinite spinner;
 }
 
 @keyframes spinner {
@@ -33,4 +34,18 @@
 	100% {
 		transform: translate3d(-50%,-50%, 0) rotate(360deg);
 	}
+}
+
+.fade-leave-to {
+	opacity: 0;
+}
+
+.fade-leave-active {
+	transition: opacity ease 300ms;
+}
+
+.visions-holder {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 }

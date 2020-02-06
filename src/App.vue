@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="application">
     <router-view></router-view>
   </div>
 </template>
@@ -7,12 +7,12 @@
 <script>
 
 export default {
-  name: 'app',
+  name: 'app'
 }
 </script>
 
 <style>
-#app {
+#application {
   font-family: 'Roboto';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

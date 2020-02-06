@@ -25,11 +25,3 @@ export default {
 	}
 }
 </script>
-
-<style scoped>
-	.visions-holder {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-	}
-</style>

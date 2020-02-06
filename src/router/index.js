@@ -11,8 +11,8 @@ export default new Router({
             component: () => import("@/views/Dashboard")
         },
         {
-            path: "/goals",
-            name: "goals"
+            path: "/goals/",
+            component: () => import("@/views/Goals"),
         },
         {
             path: "/visions",
@@ -28,6 +28,16 @@ export default new Router({
             name: "Login",
             path: "/login",
             component: () => import("@/views/Login")
+        },
+        {
+            name: "Goals",
+            path: "",
+            component: () => import("@/views/Goals")
+        },
+        {
+            name: "SingleGoal",
+            path: "/goals/:goal_id",
+            component: () => import("@/views/SingleGoal")
         }
     ]
 })

@@ -1,11 +1,17 @@
 <template>
-	<div>
+	<div class="container">
+		<keep-alive>
 		<DesktopMenu></DesktopMenu>
+		</keep-alive>
 		<Frame>
 			<slot></slot>
 		</Frame>
 	</div>
 </template>
+
+<style scoped>
+	
+</style>
 
 <script>
 import DesktopMenu from "@/components/DesktopMenu";
@@ -16,6 +22,16 @@ export default {
 	components: {
 		DesktopMenu,
 		Frame
+	},
+	data: function() {
+		return {
+			isLoading: true
+		}
+	},
+	mounted() {
+		setTimeout(() => {
+			this.isLoading = false
+		}, 2000)
 	}
 }
 </script>

@@ -1,5 +1,8 @@
 <template>
-    <div id="side-menu">
+    <div id="side-menu" :class="{'menu-loading': this.$root.$data.isLoading}">
+        <transition name="fade">
+        <div class="loading" v-if="this.$root.$data.isLoading"><div class="spinner"></div></div>
+        </transition>
         <div id="menu">
             <div id="profile">
                 <img id="pic">
@@ -22,6 +25,21 @@
 </template>
 
 <style scoped>
+    .loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: VAR(--mid-grey);
+        z-index: 100;
+    }
+
     #side-menu {
         height: 100vh;
         width: 250px;
@@ -29,6 +47,12 @@
         left: 0;
         top: 0;
         background-color: VAR(--main-blue);
+        z-index: 10;
+    }
+
+    .menu-loading {
+        width: 100vw!important;
+        position: absolute;
     }
 
     #menu {
@@ -124,6 +148,12 @@ export default {
         link: (loc) => {
             router.push({name: loc});
         }
+    },
+    created() {
+        setTimeout(() => {
+            this.$root.$data.isLoading = false;
+            console.log("Stop loading");
+        }, 1000)
     }
 }
 </script>
