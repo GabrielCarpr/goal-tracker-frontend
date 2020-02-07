@@ -152,7 +152,6 @@ export default {
     created() {
         setTimeout(() => {
             this.$root.$data.isLoading = false;
-            console.log("Stop loading");
         }, 1000)
     }
 }

@@ -13,6 +13,7 @@
 		display: flex;
 		justify-content: space-between;
 		position: relative;
+		width: 100%;
 	}
 
 	.affirmation-text {

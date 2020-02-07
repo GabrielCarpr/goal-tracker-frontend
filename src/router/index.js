@@ -4,6 +4,7 @@ import Router from "vue-router";
 Vue.use(Router);
 
 export default new Router({
+    mode: 'history',
     routes: [
         {
             path: "/",
@@ -11,7 +12,8 @@ export default new Router({
             component: () => import("@/views/Dashboard")
         },
         {
-            path: "/goals/",
+            path: "/goals",
+            name: "Goals",
             component: () => import("@/views/Goals"),
         },
         {
@@ -28,11 +30,6 @@ export default new Router({
             name: "Login",
             path: "/login",
             component: () => import("@/views/Login")
-        },
-        {
-            name: "Goals",
-            path: "",
-            component: () => import("@/views/Goals")
         },
         {
             name: "SingleGoal",

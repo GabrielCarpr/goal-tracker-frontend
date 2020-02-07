@@ -28,6 +28,8 @@ export default {
 		flex-direction: column;
 		position: relative;
 		margin-bottom: 50px;
+		margin-left: 30px;
+		margin-right: 30px;
 	}
 
 	.vision-img {
