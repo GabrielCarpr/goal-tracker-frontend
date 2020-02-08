@@ -8,7 +8,7 @@
 
 <style scoped>
     .history {
-        background: VAR(--dark-grey);
+        background: VAR(--mid-grey);
         margin-right: 20px;
         margin-bottom: 20px;
         border-radius: 5px;
@@ -48,9 +48,10 @@
         padding: 30px 50px;  
         box-sizing: border-box;
         background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
         opacity: 0;
         backdrop-filter: blur(1px);
-        transition: opacity 400ms ease-in-out, backdrop-filter 400ms ease-in-out, background-color 50ms ease-in-out;
+        transition: opacity 400ms ease-in-out, background-color 100ms ease-in-out;
         cursor: pointer;
         font-size: 20px;
         font-weight: 600;

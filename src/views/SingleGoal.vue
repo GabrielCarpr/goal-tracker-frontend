@@ -1,5 +1,8 @@
 <template>
 	<AppLayout>
+		<transition name="fade">
+		<LogModal v-if="logModalShow" @close="this.hideLogModal"/>
+		</transition>
 		<div class="section row">
 			<div class="info-panel">
 				<span class="info-row"><span>Due date: </span>22/02/2020</span>
@@ -9,7 +12,7 @@
 				<span class="info-row"><span>Display on dashboard: </span>
 					<label class="switch"><input type="checkbox"><span></span></label>
 				</span>
-				<button class="btn btn-blue btn-block" id="new-log">Add new log</button>
+				<button class="btn btn-blue btn-block" id="new-log" @click="showLogModal">Add new log</button>
 			</div>
 			<div class="graph-container">
 				<div class="graph">
@@ -51,6 +54,7 @@ import AppLayout from "@/views/AppLayout";
 import Vision from "@/components/Vision";
 import Affirmation from "@/components/Affirmation";
 import HistoryItem from "@/components/HistoryItem";
+import LogModal from "@/components/LogModal";
 
 export default {
 	name: "SingleGoal",
@@ -58,7 +62,23 @@ export default {
 		Affirmation,
 		Vision,
 		AppLayout,
-		HistoryItem
+		HistoryItem,
+		LogModal
+	},
+	data: () => {
+		return {
+			logModalShow: false
+		}
+	},
+	methods: {
+		showLogModal() {
+			this.logModalShow = true;
+			document.getElementsByTagName("body")[0].classList.add("noscroll");
+		},
+		hideLogModal() {
+			this.logModalShow = false;
+			document.getElementsByTagName("body")[0].classList.remove("noscroll");
+		}
 	}
 }
 </script>

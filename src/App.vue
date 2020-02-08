@@ -28,6 +28,7 @@ export default {
   --light-grey: #F1F1F3;
   --dark-grey: #C3C4CC;
   --mid-grey: #E1E1E6;
+  --off-black: #333333;
 
   background-color: VAR(--light-grey);
 }
