@@ -48,7 +48,7 @@ export default {
         margin-top: 15px;
         cursor: pointer;
         top: 0;
-        transition: top ease 600ms;
+        transition: top ease 600ms, box-shadow ease 600ms;
         position: relative;
         min-width: 400px;
         padding: 20px 40px;
@@ -56,6 +56,7 @@ export default {
 
     .goal-card:hover {
         top: -6px;
+        box-shadow: 0px 9px 17px rgba(14, 16, 63, 0.15), 0px 6px 10px rgba(0, 0, 0, 0.15);
     }
 
     .graph {

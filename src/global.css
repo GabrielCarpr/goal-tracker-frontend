@@ -61,6 +61,8 @@ body::-webkit-scrollbar-thumb:hover {
 	}
 }
 
+/* Transitions */
+
 .fade-leave-to, .fade-enter {
 	opacity: 0;
 }
@@ -77,10 +79,7 @@ body::-webkit-scrollbar-thumb:hover {
 	opacity: 1;
 }
 
-.visions-holder {
-	display: flex;
-	flex-wrap: wrap;
-}
+/* Badges */
 
 .badge {
 	font-size: 16px;
@@ -98,9 +97,10 @@ body::-webkit-scrollbar-thumb:hover {
 
 .switch {
 	position: relative;
-	display: inline-block;
+	display: inline-flex;
 	width: 41px!important;
 	height: 22px;
+	width: 100%;
 }
 
 .switch input {
@@ -112,6 +112,7 @@ body::-webkit-scrollbar-thumb:hover {
 .switch > span {
 	position: absolute;
 	cursor: pointer;
+	display: inline;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -160,6 +161,7 @@ body::-webkit-scrollbar-thumb:hover {
 .btn-block {
 	display: block;
 	width: 100%;
+	margin-bottom: 10px;
 }
 
 .btn-blue {
@@ -182,6 +184,35 @@ body::-webkit-scrollbar-thumb:hover {
 	box-shadow: 0 0 0 3px rgba(50, 132, 226, 0.5);
 }
 
+
+/* Inputs */
+
+.input {
+	background-color: white;
+	border: 1px solid VAR(--dark-grey);
+	border-radius: 3px;
+	box-shadow: inset 0px 0px 5px #C3C4CC;
+	margin-bottom: 25px;
+	width: 100%;
+	font-size: 22px;
+	color: VAR(--off-black);
+	padding: 15px 25px;
+	transition: box-shadow ease-in-out 150ms;
+	outline: none;
+	font-family: 'Roboto';
+	box-sizing: border-box;
+}
+
+.input::placeholder {
+	color: VAR(--dark-grey);
+}
+
+.input:focus {
+	outline: none;
+	box-shadow: inset 0px 0px 5px #C3C4CC, 0px 0px 0px 3px rgba(50, 132, 226, 0.5);
+}
+
+
 /* Modal overlay */
 
 .modal-overlay {
@@ -202,4 +233,9 @@ body::-webkit-scrollbar-thumb:hover {
 
 .noscroll {
 	overflow: hidden;
+}
+
+.visions-holder {
+	display: flex;
+	flex-wrap: wrap;
 }

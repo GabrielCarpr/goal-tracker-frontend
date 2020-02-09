@@ -12,7 +12,10 @@
 				<span class="info-row"><span>Display on dashboard: </span>
 					<label class="switch"><input type="checkbox"><span></span></label>
 				</span>
-				<button class="btn btn-blue btn-block" id="new-log" @click="showLogModal">Add new log</button>
+				<div class="bottom-btn" style="width: 100%;">
+					<button class="btn btn-blue btn-block" id="edit-goal">Edit goal</button>
+					<button class="btn btn-blue btn-block" id="new-log" @click="showLogModal">Add new log</button>
+				</div>
 			</div>
 			<div class="graph-container">
 				<div class="graph">
@@ -137,8 +140,8 @@ export default {
 		background: linear-gradient(180deg, #0E103F 0%, #2B2F99 100%), #191D73;
 	}
 
-	#new-log {
+	.bottom-btn {
 		margin-top: auto;
-		margin-bottom: 30px;
+		margin-bottom: 0px;
 	}
 </style>

@@ -12,7 +12,8 @@
                 <img src="dash_icon.svg"><span class="menu-item">Dashboard</span>
             </span>
             <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Goals'}" @click="link('Goals')">
-                <img src="goals_icon.svg"><span class="menu-item">Goals</span><span class="new-goal">&plus;</span>
+                <img src="goals_icon.svg"><span class="menu-item">Goals</span>
+                    <span class="new-goal" @click.stop="link('New goal')">&plus;</span>
                 </span>
             <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Vision board'}" @click="link('Vision board')">
                 <img src="vision_icon.svg"><span class="menu-item">Vision board</span>
@@ -20,6 +21,9 @@
             <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Affirmations'}" @click="link('Affirmations')">
                 <img src="affirmations_icon.svg"><span class="menu-item">Affirmations</span>
             </span>
+            <div class="bottom-options">
+                <span class="menu-item-box"><span class="menu-item">Log out</span></span>
+            </div>
         </div>
     </div>
 </template>
@@ -64,6 +68,9 @@
         font-size: 20px;
         font-weight: 500;
         width: 100%;
+        box-sizing: border-box;
+        height: 100%;
+        padding-bottom: 20px;
     }
 
     .menu-item-box {
@@ -135,6 +142,13 @@
     #profile > img {
         max-width: 30px;
         border-radius: 50%;
+    }
+
+    .bottom-options {
+        margin-top: auto;
+        margin-bottom: 0;
+        vertical-align: bottom;
+        color: #5f62a5;
     }
 </style>
 

@@ -32,6 +32,11 @@ export default new Router({
             component: () => import("@/views/Login")
         },
         {
+            name: "New goal",
+            path: "/goals/new",
+            component: () => import("@/views/NewGoal")
+        },
+        {
             name: "SingleGoal",
             path: "/goals/:goal_id",
             component: () => import("@/views/SingleGoal")

@@ -81,9 +81,9 @@ export default {
 	.log-submit {
 		color: VAR(--light-grey);
 		background-color: VAR(--main-blue);
-		font-size: 26px;
+		font-size: 23px;
 		width: 100%;
-		height: 60px;
+		height: 50px;
 		text-align: center;
 		border-radius: 0 0 5px 5px;
 		outline: none;
