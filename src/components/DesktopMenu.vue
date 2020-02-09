@@ -1,7 +1,7 @@
 <template>
     <div id="side-menu" :class="{'menu-loading': this.$root.$data.isLoading}">
         <transition name="fade">
-        <div class="loading" v-if="this.$root.$data.isLoading"><div class="spinner"></div></div>
+        <div class="loading" v-if="this.$store.state.isLoading"><div class="spinner"></div></div>
         </transition>
         <div id="menu">
             <div id="profile">
@@ -165,7 +165,7 @@ export default {
     },
     created() {
         setTimeout(() => {
-            this.$root.$data.isLoading = false;
+            this.$store.state.isLoading = false;
         }, 1000)
     }
 }

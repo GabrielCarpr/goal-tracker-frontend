@@ -1,13 +1,13 @@
 <template>
-    <div class="goal-card">
+    <div class="goal-card" @click="$router.push('/goals/' + goal.id)">
         <div class="graph"></div>
         <div class="goal-info">
-            <span class="goal-name">{{ goal }}</span>
+            <span class="goal-name">{{ goal.name }}</span>
             <div class="goal-display">
-                <span class="progress">{{ progress }}</span>
-                <span class="metric">{{ metric }}</span>
+                <span class="progress">{{ this.progress }}</span>
+                <span class="metric">{{ goal.metric }}</span>
             </div>
-            <span class="due-tag">Due {{ date.toLocaleString() }}</span>
+            <span class="due-tag">Due {{ new Date(goal.due).toLocaleString() }}</span>
         </div>
     </div>
 </template>
@@ -17,20 +17,13 @@ export default {
     name: "DashGoal",
     props: {
         goal: {
-            type: String,
+            type: Object,
             required: true
-        },
-        progress: {
-            type: String,
-            required: true
-        },
-        metric: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: Date,
-            required: true
+        }
+    },
+    computed: {
+        progress() {
+            return this.findProgress(this.goal) + "/" + this.goal.goal_value
         }
     }
 }

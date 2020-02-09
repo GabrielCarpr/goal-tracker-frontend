@@ -1,21 +1,8 @@
 <template>
 	<AppLayout>
-		<DashGoal goal="Goal 1"
-				progress="125/150"
-				metric="Poops"
-				:date="new Date()"></DashGoal>
-		<DashGoal goal="Goal 1"
-				progress="125/150"
-				metric="Poops"
-				:date="new Date()"></DashGoal>
-		<DashGoal goal="Goal 1"
-				progress="125/150"
-				metric="Poops"
-				:date="new Date()"></DashGoal>
-		<DashGoal goal="Goal 1"
-				progress="125/150"
-				metric="Poops"
-				:date="new Date()"></DashGoal>
+		<DashGoal v-for="goal in goals"
+                :goal="goal"
+                :key="goal.id"></DashGoal>
 	</AppLayout>
 </template>
 
@@ -28,6 +15,11 @@ export default {
 	components: {
 		AppLayout,
 		DashGoal
+	},
+	computed: {
+		goals() {
+			return this.$store.state.goals
+		}
 	}
 }
 </script>
