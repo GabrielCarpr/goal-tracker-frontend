@@ -5,12 +5,12 @@
 		</transition>
 		<div class="section row">
 			<div class="info-panel">
-				<span class="info-row"><span>Due date: </span>22/02/2020</span>
-				<span class="info-row"><span>Progress: </span>67%</span>
-				<span class="info-row"><span>Goal: </span>Goal description</span>
+				<span class="info-row"><span>Due date: </span>{{ dueDate }}</span>
+				<span class="info-row"><span>Progress: </span>{{ progress }}</span>
+				<span class="info-row"><span>Goal: </span>{{ thisGoal.description }}</span>
 				<span class="info-row"><span>Category: </span><div class="badge badge-blue">Money</div></span>
 				<span class="info-row"><span>Display on dashboard: </span>
-					<label class="switch"><input type="checkbox"><span></span></label>
+					<label class="switch"><input type="checkbox" v-model="$store.state.goals[goalIndex].dashboard"><span></span></label>
 				</span>
 				<div class="bottom-btn" style="width: 100%;">
 					<button class="btn btn-blue btn-block" id="edit-goal">Edit goal</button>
@@ -46,8 +46,9 @@
 
 		<div class="section">
 			<h2>History</h2>
-			<HistoryItem></HistoryItem>
-			<HistoryItem />
+			<HistoryItem v-for="hist in sortedHistory"
+						:key="hist.log_id"
+						:history="hist" />
 		</div>
 	</AppLayout>
 </template>
@@ -82,7 +83,29 @@ export default {
 			this.logModalShow = false;
 			document.getElementsByTagName("body")[0].classList.remove("noscroll");
 		}
-	}
+	},
+	computed: {
+		goalId() {
+			return this.$route.params.goal_id
+		},
+		goalIndex() {
+			return this.$store.state.goals.findIndex(i => i.id == this.goalId)
+		},
+		thisGoal() {
+			return this.$store.getters.getGoal(this.goalId)
+		},
+		dueDate() {
+			return this.convertDate(this.thisGoal.due)
+		},
+		progress() {
+			return this.findProgress(this.thisGoal, true) 
+		},
+		sortedHistory() {
+			let temphist = Object(this.thisGoal.history);
+			temphist = temphist.sort((a, b) => new Date(a.date) > new Date(b.date) ? 1 : -1);
+			return temphist;
+		}
+	},
 }
 </script>
 

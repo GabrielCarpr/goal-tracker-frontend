@@ -1,8 +1,8 @@
 <template>
     <div class="history">
         <span class="history-overlay">Edit</span>
-        <span class="history-date">12/02/20</span>
-        <span class="history-value">£12,000</span>
+        <span class="history-date">{{ formattedDate }}</span>
+        <span class="history-value">{{ history.value }}</span>
     </div>
 </template>
 
@@ -70,6 +70,17 @@
 
 <script>
 export default {
-    name: "HistoryItem"
+    name: "HistoryItem",
+    props: {
+        history: {
+            type: Object,
+            required: true
+        }
+    },
+    computed: {
+        formattedDate() {
+            return this.convertDate(this.history.date)
+        }
+    }
 }
 </script>

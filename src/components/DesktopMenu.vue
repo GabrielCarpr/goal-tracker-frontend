@@ -1,12 +1,12 @@
 <template>
-    <div id="side-menu" :class="{'menu-loading': this.$root.$data.isLoading}">
+    <div id="side-menu" :class="{'menu-loading': isLoading}">
         <transition name="fade">
-        <div class="loading" v-if="this.$store.state.isLoading"><div class="spinner"></div></div>
+        <div class="loading" v-if="isLoading"><div class="spinner"></div></div>
         </transition>
         <div id="menu">
             <div id="profile">
-                <img id="pic">
-                <span>gabriel.carpreau@gmail.com</span>
+                <img id="pic" :src="gravatarUrl($store.state.user.email)">
+                <span>{{ this.$store.state.user.email || "Logged out" }}</span>
             </div>
             <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Dashboard'}" @click="link('Dashboard')">
                 <img src="dash_icon.svg"><span class="menu-item">Dashboard</span>
@@ -161,6 +161,11 @@ export default {
     methods: {
         link: (loc) => {
             router.push({name: loc});
+        }
+    },
+    computed: {
+        isLoading() {
+            return this.$store.state.isLoading
         }
     },
     created() {
