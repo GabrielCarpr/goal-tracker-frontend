@@ -2,11 +2,11 @@
 	<AuthLayout>
 		<div class="form-group">
 			<label for="email">Email</label>
-			<input id="email" type="text" :disabled="isLoading">
+			<input id="email" type="text" :disabled="isLoading" v-model="email">
 		</div>
 		<div class="form-group">
 			<label for="password">Password</label>
-			<input id="password" type="password" :disabled="isLoading">
+			<input id="password" type="password" :disabled="isLoading" v-model="password">
 		</div>
 		<div class="login-group">
 			<input type="checkbox" id="permanent" checked>
@@ -14,7 +14,7 @@
 
 			<span id="forgotten">Forgotten password?</span>
 		</div>
-		<button type="button" id="login" v-if="!isLoading" @click="load()">Login</button>
+		<button type="button" id="login" v-if="!isLoading" @click="login()">Login</button>
 		<button type="button" id="login" v-else disabled style="height: 66px; width: 198px;"><span class="spinner"></span></button>
 	</AuthLayout>
 </template>
@@ -118,12 +118,19 @@ export default {
 	},
 	data: () => {
 		return {
-			isLoading: false
+			isLoading: false,
+			email: null,
+			password: null
 		}
 	},
 	methods: {
-		load() {
-			this.isLoading = true
+		login() {
+			this.isLoading = true;
+
+			this.$store
+				.dispatch("login", {email: this.email, password: this.password})
+				.then(() => this.$router.push({name: "Dashboard"}))
+				.catch(() => this.isLoading = false);
 		}
 	}
 }

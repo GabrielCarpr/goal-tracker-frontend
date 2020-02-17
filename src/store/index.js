@@ -1,44 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import AuthService from "@/api/AuthService";
+import ApiService from "@/api/api.service";
 
 Vue.use(Vuex)
 
 const state = {
-  goals: [
-    {
-      id: 1,
-      name: "Goal 1",
-      category_id: 1,
-      metric: "pounds",
-      due: "2020-02-14",
-      description: "This is my first goal",
-      dashboard: true,
-      goal_value: 1500,
-      goal_type: "total",
-      time_period: "month",
-      created_at: "2020-02-07T14:30+0000",
-      history: [
-        {
-          log_id: "1",
-          date: "2020-03-10 11:30+0000",
-          value: 1000
-        },
-        {
-          log_id: "2",
-          date: "2020-02-09 10:52+0000",
-          value: 900
-        },
-        {
-          log_id: "3",
-          date: "2020-02-10 11:00+0000",
-          value: 1100
-        }
-      ]
-    }
-  ],
+  goals: [],
   isLoading: true,
   user: {
-    email: "gabriel.carpreau@gmail.com"
+    email: "",
+    name: "",
+    authenticated: false
+  },
+  errors: {
+    auth: {}
   }
 }
 
@@ -48,14 +24,48 @@ const getters = {
   }
 }
 
+const mutations = {
+  setAuth(state, payload) {
+    state.user.authenticated = true;
+    state.user.email = payload.user.email;
+    state.user.name = payload.user.name;
+    state.errors.auth = {};
+    AuthService.setXsrf(payload.xsrf);
+  },
+
+  purgeAuth(state) {
+    state.user.authenticated = false;
+    state.user.email = "";
+    state.user.name = "";
+    state.errors.auth = {};
+    AuthService.destroyXsrf();
+  },
+
+  setAuthErrors(state, errors) {
+    state.errors.auth = {...state.errors.auth, errors};
+  }
+}
+
+const actions = {
+  login(context, credentials) {
+    return new Promise((resolve) => {
+      ApiService.post("auth/login", credentials)
+        .then((response) => {
+          console.log("THEN: " + response)
+          context.commit("setAuth", {xsrf: credentials.xsrf, user: {email: response.email, name: response.name}});
+          resolve(response);
+        })
+        .catch(({ response }) => {
+          console.log("CATCH: " + response.data.error);
+          context.commit("setAuthErrors", response.data.error);
+        });
+    });
+  }
+}
+
 export default new Vuex.Store({
   state,
   getters,
-  mutations: {
-  },
-  actions: {
-
-  },
-  modules: {
-  }
-})
+  mutations,
+  actions
+});
