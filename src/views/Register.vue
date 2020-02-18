@@ -1,12 +1,20 @@
 <template>
 	<AuthLayout>
 		<div class="form-group">
+			<label for="name">Name</label>
+			<input id="name" type="text" :disabled="isLoading" v-model="name">
+		</div>
+		<div class="form-group">
 			<label for="email">Email</label>
 			<input id="email" type="text" :disabled="isLoading" v-model="email">
 		</div>
 		<div class="form-group">
 			<label for="password">Password</label>
 			<input id="password" type="password" :disabled="isLoading" v-model="password">
+		</div>
+		<div class="form-group">
+			<label for="password_confirmation">Confirm password</label>
+			<input id="password_confirmation" type="password" :disabled="isLoading" v-model="password_confirmation">
 		</div>
 		<div class="login-group">
 			<input type="checkbox" id="permanent" checked>
@@ -17,7 +25,7 @@
 		<div class="error" :class="{ 'error-show': $store.state.errors.auth.error }">
 			&times; {{ $store.state.errors.auth.error }}
 		</div>
-		<button type="button" id="login" v-if="!isLoading" @click="login()">Login</button>
+		<button type="button" id="login" v-if="!isLoading" @click="register()">Register</button>
 		<button type="button" id="login" v-else disabled style="height: 66px; width: 198px;"><span class="spinner"></span></button>
 	</AuthLayout>
 </template>
@@ -126,7 +134,7 @@
 import AuthLayout from "@/views/AuthLayout";
 
 export default {
-	name: "Login",
+	name: "Register",
 	components: {
 		AuthLayout
 	},
@@ -134,15 +142,21 @@ export default {
 		return {
 			isLoading: false,
 			email: null,
-			password: null
+			password: null,
+			name: null,
+			password_confirmation: null
 		}
 	},
 	methods: {
-		login() {
+		register() {
 			this.isLoading = true;
 
 			this.$store
-				.dispatch("login", {email: this.email, password: this.password})
+				.dispatch("register", {
+					email: this.email, 
+					password: this.password,
+					name: this.name,
+					password_confirmation: this.password_confirmation})
 				.then(() => this.$router.push({name: "Dashboard"}))
 				.catch(() => this.isLoading = false);
 		}

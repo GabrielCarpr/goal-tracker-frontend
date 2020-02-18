@@ -4,6 +4,9 @@ Vue.mixin({
 	methods: {
 		findProgress(goal, percent=false) {
 			const history = goal.history;
+			if (history.length == 0) {
+				return percent ? "0%" : 0;
+			}
 			if (goal.goal_type == "total") {
 				let latest = history.reduce((prev, curr) => {
 					return new Date(prev.date) < new Date(curr.date) ? curr : prev;

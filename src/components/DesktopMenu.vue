@@ -9,20 +9,20 @@
                 <span>{{ this.$store.state.user.email || "Logged out" }}</span>
             </div>
             <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Dashboard'}" @click="link('Dashboard')">
-                <img src="dash_icon.svg"><span class="menu-item">Dashboard</span>
+                <img src="/dash_icon.svg"><span class="menu-item">Dashboard</span>
             </span>
             <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Goals'}" @click="link('Goals')">
-                <img src="goals_icon.svg"><span class="menu-item">Goals</span>
+                <img src="/goals_icon.svg"><span class="menu-item">Goals</span>
                     <span class="new-goal" @click.stop="link('New goal')">&plus;</span>
                 </span>
             <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Vision board'}" @click="link('Vision board')">
-                <img src="vision_icon.svg"><span class="menu-item">Vision board</span>
+                <img src="/vision_icon.svg"><span class="menu-item">Vision board</span>
             </span>
             <span class="menu-item-box" :class="{'menu-active': this.$route.name == 'Affirmations'}" @click="link('Affirmations')">
-                <img src="affirmations_icon.svg"><span class="menu-item">Affirmations</span>
+                <img src="/affirmations_icon.svg"><span class="menu-item">Affirmations</span>
             </span>
             <div class="bottom-options">
-                <span class="menu-item-box"><span class="menu-item">Log out</span></span>
+                <span class="menu-item-box" @click="logout">&#8592;<span class="menu-item" style="margin-left: 10px;">Log out</span></span>
             </div>
         </div>
     </div>
@@ -128,8 +128,10 @@
         border-bottom: 2px solid VAR(--main-blue-highlight);
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         margin-bottom: 20px;
+        padding: 10px 10px;
+        box-sizing: border-box;
     }
 
     #profile > span {
@@ -155,12 +157,14 @@
 <script>
 import router from "@/router/";
 
-
 export default {
     name: "DesktopMenu",
     methods: {
         link: (loc) => {
             router.push({name: loc});
+        },
+        logout() {
+            this.$store.dispatch("logout");
         }
     },
     computed: {
@@ -169,9 +173,12 @@ export default {
         }
     },
     created() {
-        setTimeout(() => {
-            this.$store.state.isLoading = false;
-        }, 1000)
+        this.$store.dispatch("getAllGoals")
+            .then(() => {
+                setTimeout(() => {
+                    this.$store.state.isLoading = false;
+                }, 600)
+            })
     }
 }
 </script>

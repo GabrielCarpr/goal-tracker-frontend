@@ -33,6 +33,11 @@ const router = new Router({
             component: () => import("@/views/Login")
         },
         {
+            name: "Register",
+            path: "/register",
+            component: () => import("@/views/Register")
+        },
+        {
             name: "New goal",
             path: "/goals/new",
             component: () => import("@/views/NewGoal")
@@ -50,12 +55,20 @@ const router = new Router({
                 }
             }
         }
-    ]
+    ],
+    scrollBehaviour() {
+        return {x: 0, y: 0}
+    }
 })
 
-router.beforeEach((to, from, next) => {
-    if (!store.state.user.authenticated && to.name !== "Login" && to.name !== "Register") next("/login")
-    else next();
+
+// Protect authed routes
+router.beforeResolve((to, from, next) => {
+    if (!["Login", "Register"].includes(to.name)) {
+        Promise.all([store.dispatch("checkAuth")]).then(next)
+    } else {
+        next();
+    }
 });
 
 export default router;
