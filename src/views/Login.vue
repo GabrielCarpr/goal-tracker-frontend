@@ -1,30 +1,32 @@
 <template>
 	<AuthLayout>
-		<div class="form-group">
-			<ValidationProvider rules='required|email' v-slot="{ errors }">
-				<label for="email">Email</label>
-				<input id="email" type="text" :disabled="isLoading" v-model="email">
-				<span>{{ errors[0] }}</span>
-			</ValidationProvider>
-		</div>
-		<div class="form-group">
-			<ValidationProvider rules='required' v-slot="{ errors }">
-				<label for="password">Password</label>
-				<input id="password" type="password" :disabled="isLoading" v-model="password">
-				<span>{{ errors[0] }}</span>
-			</ValidationProvider>
-		</div>
-		<div class="login-group">
-			<input type="checkbox" id="permanent" checked>
-			<label for="permanent">Stay signed in?</label>
+		<ValidationObserver v-slot="{ handleSubmit }">
+			<div class="form-group">
+				<ValidationProvider rules='required|email' v-slot="{ errors }">
+					<label for="email">Email</label>
+					<input id="email" type="text" :disabled="isLoading" v-model="email">
+					<span>{{ errors[0] }}</span>
+				</ValidationProvider>
+			</div>
+			<div class="form-group">
+				<ValidationProvider rules='required' v-slot="{ errors }">
+					<label for="password">Password</label>
+					<input id="password" type="password" :disabled="isLoading" v-model="password">
+					<span>{{ errors[0] }}</span>
+				</ValidationProvider>
+			</div>
+			<div class="login-group">
+				<input type="checkbox" id="permanent" checked>
+				<label for="permanent">Stay signed in?</label>
 
-			<span id="forgotten" @click="goToRegister">Create an account</span>
-		</div>
-		<div class="error" :class="{ 'error-show': $store.state.errors.auth.error }">
-			&times; {{ $store.state.errors.auth.error }}
-		</div>
-		<button type="button" id="login" v-if="!isLoading" @click="login()">Login</button>
-		<button type="button" id="login" v-else disabled style="height: 66px; width: 198px;"><span class="spinner"></span></button>
+				<span id="forgotten" @click="goToRegister">Create an account</span>
+			</div>
+			<div class="error" :class="{ 'error-show': $store.state.errors.auth.error }">
+				&times; {{ $store.state.errors.auth.error }}
+			</div>
+			<button type="button" id="login" v-if="!isLoading" @click="handleSubmit(login)">Login</button>
+			<button type="button" id="login" v-else disabled style="height: 66px; width: 198px;"><span class="spinner"></span></button>
+		</ValidationObserver>
 	</AuthLayout>
 </template>
 
@@ -126,12 +128,6 @@
 	button:disabled {
 		background: #23234d;
 		cursor: auto;
-	}
-
-	input+span {
-		color: red;
-		margin-top: 5px;
-		display: block;
 	}
 </style>
 

@@ -1,33 +1,48 @@
 <template>
 	<AuthLayout>
-		<div class="form-group">
-			<label for="name">Name</label>
-			<input id="name" type="text" :disabled="isLoading" v-model="name">
-		</div>
-		<div class="form-group">
-			<label for="email">Email</label>
-			<input id="email" type="text" :disabled="isLoading" v-model="email">
-		</div>
-		<div class="form-group">
-			<label for="password">Password</label>
-			<input id="password" type="password" :disabled="isLoading" v-model="password">
-		</div>
-		<div class="form-group">
-			<label for="password_confirmation">Confirm password</label>
-			<input id="password_confirmation" type="password" :disabled="isLoading" v-model="password_confirmation">
-		</div>
-		<div class="login-group">
-			<input type="checkbox" id="permanent" checked>
-			<label for="permanent">Stay signed in?</label>
+		<ValidationObserver v-slot="{ handleSubmit, invalid }">
+			<div class="form-group">
+				<ValidationProvider rules="required" v-slot="{ errors }">
+					<label for="name">Name</label>
+					<input id="name" type="text" :disabled="isLoading" v-model="name">
+					<span>{{ errors[0] }}</span>
+				</ValidationProvider>
+			</div>
+			<div class="form-group">
+				<ValidationProvider rules="required|email" v-slot="{ errors }">
+					<label for="email">Email</label>
+					<input id="email" type="text" :disabled="isLoading" v-model="email">
+					<span>{{ errors[0] }}</span>
+				</ValidationProvider>
+			</div>
+			<div class="form-group">
+				<ValidationProvider rules="required|min:7" v-slot="{ errors }" vid="password">
+					<label for="password">Password</label>
+					<input id="password" type="password" :disabled="isLoading" v-model="password">
+					<span>{{ errors[0] }}</span>
+				</ValidationProvider>
+			</div>
+			<div class="form-group">
+				<ValidationProvider rules="required|min:7|confirmed:password" v-slot="{ errors }">
+					<label for="password_confirmation">Confirm password</label>
+					<input id="password_confirmation" type="password" :disabled="isLoading" v-model="password_confirmation">
+					<span>{{ errors[0] }}</span>
+				</ValidationProvider>
+			</div>
+			<div class="login-group">
+				<input type="checkbox" id="permanent" checked>
+				<label for="permanent">Stay signed in?</label>
 
-			<span id="forgotten">Forgotten password?</span>
-		</div>
-		<div class="error" :class="{ 'error-show': $store.state.errors.auth }"
-		v-for="err in $store.state.errors.auth" :key="err">
-			&times; {{ err }}
-		</div>
-		<button type="button" id="login" v-if="!isLoading" @click="register()">Register</button>
-		<button type="button" id="login" v-else disabled style="height: 66px; width: 198px;"><span class="spinner"></span></button>
+				<span id="forgotten">Forgotten password?</span>
+			</div>
+			<div class="error" :class="{ 'error-show': $store.state.errors.auth }"
+			v-for="err in $store.state.errors.auth" :key="err">
+				&times; {{ err }}
+			</div>
+			<button type="button" id="login" v-if="!isLoading" 
+			@click="handleSubmit(register)">Register</button>
+			<button type="button" id="login" v-else disabled style="height: 66px; width: 198px;"><span class="spinner"></span></button>
+		</ValidationObserver>
 	</AuthLayout>
 </template>
 
