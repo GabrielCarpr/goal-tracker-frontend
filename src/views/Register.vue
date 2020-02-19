@@ -22,8 +22,9 @@
 
 			<span id="forgotten">Forgotten password?</span>
 		</div>
-		<div class="error" :class="{ 'error-show': $store.state.errors.auth.error }">
-			&times; {{ $store.state.errors.auth.error }}
+		<div class="error" :class="{ 'error-show': $store.state.errors.auth }"
+		v-for="err in $store.state.errors.auth" :key="err">
+			&times; {{ err }}
 		</div>
 		<button type="button" id="login" v-if="!isLoading" @click="register()">Register</button>
 		<button type="button" id="login" v-else disabled style="height: 66px; width: 198px;"><span class="spinner"></span></button>
@@ -157,7 +158,6 @@ export default {
 					password: this.password,
 					name: this.name,
 					password_confirmation: this.password_confirmation})
-				.then(() => this.$router.push({name: "Dashboard"}))
 				.catch(() => this.isLoading = false);
 		}
 	}

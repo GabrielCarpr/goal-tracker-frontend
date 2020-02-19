@@ -12,6 +12,7 @@
     "babel": "^6.23.0",
     "core-js": "^3.4.4",
     "eslint": "^6.8.0",
+    "vee-validate": "^3.2.5",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.5",
     "vue-router": "^3.1.5",

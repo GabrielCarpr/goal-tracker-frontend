@@ -1,18 +1,24 @@
 <template>
 	<AuthLayout>
 		<div class="form-group">
-			<label for="email">Email</label>
-			<input id="email" type="text" :disabled="isLoading" v-model="email">
+			<ValidationProvider rules='required|email' v-slot="{ errors }">
+				<label for="email">Email</label>
+				<input id="email" type="text" :disabled="isLoading" v-model="email">
+				<span>{{ errors[0] }}</span>
+			</ValidationProvider>
 		</div>
 		<div class="form-group">
-			<label for="password">Password</label>
-			<input id="password" type="password" :disabled="isLoading" v-model="password">
+			<ValidationProvider rules='required' v-slot="{ errors }">
+				<label for="password">Password</label>
+				<input id="password" type="password" :disabled="isLoading" v-model="password">
+				<span>{{ errors[0] }}</span>
+			</ValidationProvider>
 		</div>
 		<div class="login-group">
 			<input type="checkbox" id="permanent" checked>
 			<label for="permanent">Stay signed in?</label>
 
-			<span id="forgotten">Forgotten password?</span>
+			<span id="forgotten" @click="goToRegister">Create an account</span>
 		</div>
 		<div class="error" :class="{ 'error-show': $store.state.errors.auth.error }">
 			&times; {{ $store.state.errors.auth.error }}
@@ -92,6 +98,7 @@
 
 	#forgotten {
 		margin: 0;
+		cursor: pointer;
 	}
 
 	.login-group > input {
@@ -120,6 +127,12 @@
 		background: #23234d;
 		cursor: auto;
 	}
+
+	input+span {
+		color: red;
+		margin-top: 5px;
+		display: block;
+	}
 </style>
 
 <script>
@@ -143,8 +156,10 @@ export default {
 
 			this.$store
 				.dispatch("login", {email: this.email, password: this.password})
-				.then(() => this.$router.push({name: "Dashboard"}))
 				.catch(() => this.isLoading = false);
+		},
+		goToRegister() {
+			this.$router.push({name: "Register"});
 		}
 	}
 }

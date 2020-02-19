@@ -171,14 +171,6 @@ export default {
         isLoading() {
             return this.$store.state.isLoading
         }
-    },
-    created() {
-        this.$store.dispatch("getAllGoals")
-            .then(() => {
-                setTimeout(() => {
-                    this.$store.state.isLoading = false;
-                }, 600)
-            })
     }
 }
 </script>
