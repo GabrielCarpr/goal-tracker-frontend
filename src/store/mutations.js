@@ -29,5 +29,14 @@ export const mutations = {
 		setTimeout(() => {
 			state.isLoading = false;
 		}, time);
+	},
+
+	addGoal(state, payload) {
+		state.goals.push(payload);
+	},
+
+	updateGoal(state, data) {
+		let index = state.goals.findIndex(el => el.id === data.id);
+		state.goals[index] = {...state.goals[index], ...data};
 	}
 }

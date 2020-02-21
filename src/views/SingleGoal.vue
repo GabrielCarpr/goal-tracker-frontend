@@ -10,7 +10,7 @@
 				<span class="info-row"><span>Goal: </span>{{ thisGoal.description }}</span>
 				<span class="info-row"><span>Category: </span><div class="badge badge-blue">Money</div></span>
 				<span class="info-row"><span>Display on dashboard: </span>
-					<label class="switch"><input type="checkbox" v-model="$store.state.goals[goalIndex].dashboard"><span></span></label>
+					<label class="switch"><input type="checkbox"><span></span></label>
 				</span>
 				<div class="bottom-btn" style="width: 100%;">
 					<button class="btn btn-blue btn-block" id="edit-goal">Edit goal</button>
@@ -82,6 +82,9 @@ export default {
 		hideLogModal() {
 			this.logModalShow = false;
 			document.getElementsByTagName("body")[0].classList.remove("noscroll");
+		},
+		updateGoal() {
+			this.$store.dispatch("updateGoal", {id: this.goalId, payload: this.thisGoal});
 		}
 	},
 	computed: {

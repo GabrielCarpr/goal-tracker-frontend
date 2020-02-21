@@ -1,6 +1,6 @@
 <template>
     <div id="frame">
-        <h1>{{ this.$route.name }}</h1>
+        <h1>{{ this.$route.meta.title }}</h1>
         <div id="content">
             <slot></slot>
         </div>

@@ -1,6 +1,6 @@
 <template>
 	<AuthLayout>
-		<ValidationObserver v-slot="{ handleSubmit, invalid }">
+		<ValidationObserver v-slot="{ handleSubmit }">
 			<div class="form-group">
 				<ValidationProvider rules="required" v-slot="{ errors }">
 					<label for="name">Name</label>

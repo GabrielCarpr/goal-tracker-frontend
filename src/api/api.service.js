@@ -25,10 +25,8 @@ const ApiService = {
 		return Vue.axios.post(resource, params);
 	},
 
-	put(resource, slug="", params="") {
-		return Vue.axios.post(resource, slug, params).catch(error => {
-			throw new Error(`API error [PUT] ${error}`);
-		});
+	put(resource, params) {
+		return Vue.axios.put(resource, params);
 	},
 
 	delete(resource, slug="", params="") {
@@ -53,11 +51,13 @@ export const GoalService = {
 	},
 
 	create(payload) {
-		return ApiService.post(this.RSRC, "", payload);
+		ApiService.setHeader();
+		return ApiService.post(this.RSRC, payload);
 	},
 
 	update(id, payload) {
-		return ApiService.put(this.RSRC, id, payload);
+		ApiService.setHeader();
+		return ApiService.put(`${this.RSRC}/${id}`, payload);
 	},
 
 	delete(id) {

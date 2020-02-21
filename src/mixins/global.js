@@ -4,7 +4,7 @@ Vue.mixin({
 	methods: {
 		findProgress(goal, percent=false) {
 			const history = goal.history;
-			if (history.length == 0) {
+			if (!history.length || history.length == 0) {
 				return percent ? "0%" : 0;
 			}
 			if (goal.goal_type == "total") {

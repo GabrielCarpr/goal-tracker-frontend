@@ -12,7 +12,8 @@ const router = new Router({
             name: "Dashboard",
             component: () => import("@/views/Dashboard"),
             meta: {
-                authReq: true
+                authReq: true,
+                title: "Dashboard"
             }
         },
         {
@@ -20,7 +21,8 @@ const router = new Router({
             name: "Goals",
             component: () => import("@/views/Goals"),
             meta: {
-                authReq: true
+                authReq: true,
+                title: "Goals"
             }
         },
         {
@@ -28,7 +30,8 @@ const router = new Router({
             name: "Vision board",
             component: () => import("@/views/Visions"),
             meta: {
-                authReq: true
+                authReq: true,
+                title: "Visions"
             }
         },
         {
@@ -36,7 +39,8 @@ const router = new Router({
             name: "Affirmations",
             component: () => import("@/views/Affirmations"),
             meta: {
-                authReq: true
+                authReq: true,
+                title: "Affirmations"
             }
         },
         {
@@ -54,7 +58,8 @@ const router = new Router({
             path: "/goals/new",
             component: () => import("@/views/NewGoal"),
             meta: {
-                authReq: true
+                authReq: true,
+                title: "Add new goal"
             }
         },
         {
@@ -62,13 +67,16 @@ const router = new Router({
             path: "/goals/:goal_id",
             component: () => import("@/views/SingleGoal"),
             meta: {
-                authReq: true
+                authReq: true,
+                title: null
             },
             beforeEnter: (to, from, next) => {
                 let goal_id = to.params.goal_id;
-                if (!store.state.goals.some(e => e.id == goal_id)) {
+                let goal = store.state.goals.find(item => item.id == goal_id);
+                if (!goal) {
                     next({name: "Goals"})
                 } else {
+                    to.meta.title = goal.name;
                     next()
                 }
             }
@@ -82,36 +90,26 @@ const router = new Router({
 
 // Protect authed routes
 router.beforeEach((to, from, next) => {
-    console.log("BEFORE")
-    console.log(store.state.user.authenticated)
-    console.log(to.meta.authReq)
+    Promise.all([store.dispatch("validate")]).then(() => {
+        const isAuthenticated = store.state.user.authenticated;
+        const authRequired = to.meta.authReq;
+        
+        // Protect authenticated route
+        if (authRequired && isAuthenticated) {
+            return next();
+        }
 
-    // After auth -- all initial API requests and turn off loading screen
-    if ((from.name === "Login" || from.name === "Register") 
-            && store.state.user.authenticated && to.meta.authReq) {
-        return next();
-    }
+        // Protect auth screens from authenticated user
+        if (!authRequired && isAuthenticated) {
+            return next({name: "Dashboard"});
+        }
 
-    // Coming to app already authenticated -- initial load
-    else if (from.name == null && store.dispatch("checkAuth")) {
-        store.dispatch("getAllGoals");
-        return next();
-    }
-
-    // Currently authenticated and trying to access auth views -- redirects
-    else if ((to.name === "Login" || to.name === "Register")
-            && store.state.user.authenticated) {
-                return next({name: "Dashboard"})
-    }
-
-    // Check auth on each page view
-    else if (!["Login", "Register"].includes(to.name)) {
-        return Promise.all([store.dispatch("checkAuth")]).then(next)
-    } else {
-        console.log("4")
-        console.log(to.name)
-        return next();
-    }
+        else if (to.meta.authReq != undefined) {
+            return next({name: "Login"});
+        } else {
+            return next();
+        }
+    });
 });
 
 export default router;

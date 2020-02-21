@@ -6,34 +6,29 @@
 			<span class="subheading">What do you want to achieve?</span>
 			<div class="section">
 				<div class="step"><span>1</span></div>
-				<input type="text" class="input" placeholder="Goal name">
-				<textarea class="input" placeholder="Goal description"></textarea>
+				<input type="text" class="input" placeholder="Goal name" v-model="goal.name">
+				<textarea class="input" placeholder="Goal description" v-model="goal.description"></textarea>
 			</div>
 
 			<div class="section">
 				<div class="step"><span>2</span></div>
-				<input type="text" class="input" placeholder="Goal measured by...">
-				<input type="number" class="input" placeholder="Goal value">
-				<input type="date" class="input" placeholder="Goal date">
-				<div class="row">
-					<div class="col">
-						<select class="input">
-							<option disabled selected>Time period</option>
-							<option value="log">Log</option>
-							<option value="day">Day</option>
-							<option value="week">Week</option>
-							<option value="month">Month</option>
-							<option value="year">Year</option>
-						</select>
-					</div>
-					<div class="col">
-						<label class="switch" id="lower-better" style="margin-right: 20px; margin-top: -20px;">
-							<input type="checkbox"><span></span>
-						</label>
-						<label for="lower-better">Lower better?</label>
-					</div>
-				</div>
-				<button type="button" class="btn btn-blue" style="align-self: center;">Create goal</button>
+				<input type="text" class="input" placeholder="Goal measured by..." v-model="goal.metric">
+				<input type="number" class="input" placeholder="Goal value" v-model="goal.goal_value">
+				<input type="date" class="input" placeholder="Goal date" v-model="goal.due">
+				<select class="input" v-model="goal.type">
+					<option disabled selected>Goal type</option>
+					<option value="total">Total</option>
+					<option value="average">Average</option>
+				</select>
+				<select class="input" v-if="goal.type == 'average'" v-model="goal.time_period">
+					<option disabled selected>Time period</option>
+					<option value="log">Log</option>
+					<option value="day">Day</option>
+					<option value="week">Week</option>
+					<option value="month">Month</option>
+					<option value="year">Year</option>
+				</select>
+				<button type="button" class="btn btn-blue" style="align-self: center;" @click="createGoal">Create goal</button>
 			</div>
 		</div>
 	</div>
@@ -124,6 +119,51 @@ export default {
 	name: "NewGoal",
 	components: {
 		DesktopMenu
+	},
+	data() {
+		return {
+			goal: {
+				name: null,
+				description: null,
+				metric: null,
+				goal_value: null,
+				due: null,
+				time_period: "Time period",
+				type: "Goal type"
+			},
+			error: null,
+			due_date: {
+				d: 1,
+				m: 1,
+				y: 1970
+			}
+		}
+	},
+	methods: {
+		createGoal() {
+			this._due_date = this.goal.due;
+			this.goal.due = this._due_date;
+			this.$store.dispatch("addGoal", this.goal)
+				.then((data) => {
+					console.log(data);
+					this.$router.push({name: "SingleGoal", params: {goal_id: data.id}})
+				})
+				.catch(error => {
+					this.error = error.response.data.error;
+				});
+		}
+	},
+	computed: {
+		_due_date: {
+			get() {
+				let {d, m, y} = this.due_date;
+				return `${y}-${m}-${d}`;
+			},
+			set(newVal) {
+				let [y, m, d] = newVal.split('-');
+				this.due_date = {y, m, d};
+			}
+		}
 	}
 }
 </script>

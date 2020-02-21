@@ -45,28 +45,25 @@ export const actions = {
 	},
 
 	// Checks whether authenticated and gets user details if necessary
-	checkAuth(context) {
-		if (AuthService.getXsrf()) {
-			if (!context.state.user.authenticated) {
-				ApiService.setHeader();
+	validate(context) {
+		const xsrf = AuthService.getXsrf();
 
-				ApiService.get("/users")
-					.then(({ data }) => {
-						let newData = data;
-						newData.xsrf = AuthService.getXsrf();
-						context.commit("setAuth", newData);
-						return true;
-					})
-					.catch(() => {
-						context.commit("purgeAuth");
-						//router.push({name: "Login"});
-						return false;
-					});
-			}
+		if (xsrf && !context.state.user.authenticated) {
+			ApiService.setHeader();
+
+			return ApiService.get("/users")
+				.then(({ data }) => {
+					let newData = data;
+					newData.xsrf = AuthService.getXsrf();
+					context.commit("setAuth", newData);
+				})
+				.catch(() => {
+					context.commit("purgeAuth");
+				});
+		} else if (xsrf && context.state.user.authenticated) {
+			return
 		} else {
 			context.commit("purgeAuth");
-			//router.push({name: "Login"});
-			return false;
 		}
 	},
 
@@ -76,5 +73,21 @@ export const actions = {
 		console.log(data);
 		context.commit("setGoals", data);
 		return context.commit("stopLoading", 500);
+	},
+
+	addGoal(context, payload) {
+		return GoalService.create(payload)
+			.then(({ data }) => {
+				context.commit("addGoal", data)
+				return data;
+			});
+	},
+
+	updateGoal(context, { id, payload }) {
+		return GoalService.update(id, payload)
+			.then(({ data }) => {
+				context.commit("updateGoal", data)
+				return data;
+			});
 	}
 }
