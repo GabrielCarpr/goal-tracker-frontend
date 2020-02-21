@@ -93,6 +93,11 @@ router.beforeEach((to, from, next) => {
     Promise.all([store.dispatch("validate")]).then(() => {
         const isAuthenticated = store.state.user.authenticated;
         const authRequired = to.meta.authReq;
+
+        // Initial load
+        if (isAuthenticated && from.name == null) {
+            store.dispatch("getAllGoals");
+        }
         
         // Protect authenticated route
         if (authRequired && isAuthenticated) {

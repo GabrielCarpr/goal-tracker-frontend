@@ -1,4 +1,5 @@
 import AuthService from "@/api/AuthService";
+import Vue from 'vue';
 
 export const mutations = {
 	setAuth(state, payload) {
@@ -37,6 +38,6 @@ export const mutations = {
 
 	updateGoal(state, data) {
 		let index = state.goals.findIndex(el => el.id === data.id);
-		state.goals[index] = {...state.goals[index], ...data};
+		Vue.set(state.goals, index, {...state.goals[index], ...data});
 	}
 }

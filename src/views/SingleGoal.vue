@@ -10,7 +10,9 @@
 				<span class="info-row"><span>Goal: </span>{{ thisGoal.description }}</span>
 				<span class="info-row"><span>Category: </span><div class="badge badge-blue">Money</div></span>
 				<span class="info-row"><span>Display on dashboard: </span>
-					<label class="switch"><input type="checkbox"><span></span></label>
+					<label class="switch">
+						<input type="checkbox" :checked="dashboard" @change="dashboard = $event.target.checked"><span></span>
+					</label>
 				</span>
 				<div class="bottom-btn" style="width: 100%;">
 					<button class="btn btn-blue btn-block" id="edit-goal">Edit goal</button>
@@ -107,6 +109,17 @@ export default {
 			let temphist = Object(this.thisGoal.history);
 			temphist = temphist.sort((a, b) => new Date(a.date) > new Date(b.date) ? 1 : -1);
 			return temphist;
+		},
+		dashboard: {
+			set(value) {
+				this.$store.dispatch("updateGoal", {
+					id: this.goalId,
+					payload: {dashboard: value}
+				});
+			},
+			get() {
+				return this.thisGoal.dashboard;
+			}
 		}
 	},
 }
