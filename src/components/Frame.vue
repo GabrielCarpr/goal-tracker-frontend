@@ -16,14 +16,14 @@
     h1 {
         margin-top: 46px;
         margin-bottom: 30px;
-        margin-left: 102px;
+        margin-left: 5vw;
         text-align: left;
     }
 
     #content {
         text-align: left;
-        padding: 0 102px;
-        width: CALC(100vw - 250px - 204px);
+        padding: 0 5vw;
+        width: CALC(100vw - 250px - 10vw);
         height: auto;
         overflow-x: hidden;
     }

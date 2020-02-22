@@ -7,7 +7,7 @@
                 <span class="progress">{{ this.progress }}</span>
                 <span class="metric">{{ goal.metric }}</span>
             </div>
-            <span class="due-tag">Due {{ new Date(goal.due).toLocaleString() }}</span>
+            <span class="due-tag">Due {{ convertDate(goal.date) }}</span>
         </div>
     </div>
 </template>
@@ -43,7 +43,7 @@ export default {
         top: 0;
         transition: top ease 600ms, box-shadow ease 600ms;
         position: relative;
-        min-width: 400px;
+        min-width: 700px;
         padding: 20px 40px;
     }
 
@@ -56,7 +56,8 @@ export default {
         background: VAR(--dark-blue);
         border-radius: 4px;
         align-self: stretch;
-        width: 40%;
+		width: 50%;
+		min-width: 300px;
     }
 
     .goal-info {
@@ -69,7 +70,7 @@ export default {
     }
 
     .goal-name {
-        font-size: 36px;
+        font-size: 3em;
         font-weight: 600;
         color: VAR(--light-grey);
         margin-bottom: 50px;
@@ -82,7 +83,8 @@ export default {
     }
 
     .progress {
-        font-size: 64px;
+        font-size: 3em;
+		vertical-align: bottom;
         font-weight: 600;
         color: VAR(--light-grey);
         line-height: 60px;
@@ -90,6 +92,7 @@ export default {
 
     .metric {
         font-size: 24px;
+		vertical-align: baseline;
         font-weight: 300;
         color: VAR(--light-grey);
         margin-left: 10px;

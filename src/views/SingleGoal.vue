@@ -149,7 +149,8 @@ export default {
 	}
 
 	.info-panel {
-		width: 40%;
+		width: 45%;
+		min-width: 300px;
 		display: inline-flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -158,18 +159,22 @@ export default {
 	.info-row {
 		display: flex;
 		width: 100%;
+		max-width: 100%;
+		
 		margin-bottom: 10px;
 	}
 
 	.info-row > span {
 		width: 40%;
+		min-width: 40%;
 		margin-right: 30px;
 		font-weight: 600;
 	}
 
 	.graph-container {
-		width: 60%;
-		padding: 0 40px;
+		width: 55%;
+		min-width: 390px;
+		padding-left: 40px;
 		height: 400px;
 		display: inline-block;
 		box-sizing: border-box;
