@@ -23,7 +23,7 @@ export default {
     },
     computed: {
         progress() {
-            return this.findProgress(this.goal) + "/" + this.goal.goal_value
+            return this.$store.getters.findProgress(this.goal.id) + "/" + this.goal.goal_value;
         }
     }
 }

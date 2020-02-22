@@ -2,8 +2,8 @@
 	<div class="modal-overlay" @click="this.close">
 		<div class="log-modal" @click.stop>
 			<div class="log-header">Goal name <span class="log-close" @click="this.close">&times;</span></div>
-			<input autofocus class="log-input" type="number"><span class="log-metric">metric</span>
-			<button type="button" class="log-submit">Save log</button>
+			<input autofocus class="log-input" type="number" v-model="value"><span class="log-metric">{{ metric }}</span>
+			<button type="button" class="log-submit" @click="emitValue">Save log</button>
 		</div>
 	</div>
 </template>
@@ -11,9 +11,23 @@
 <script>
 export default {
 	name: "LogModal",
+	props: {
+		metric: {
+			type: String,
+			required: true
+		}
+	},
+	data() {
+		return {
+			value: null
+		}
+	},
 	methods: {
 		close() {
 			this.$emit("close");
+		},
+		emitValue() {
+			this.$emit("emitLog", this.value);
 		}
 	}
 }

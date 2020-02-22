@@ -29,10 +29,8 @@ const ApiService = {
 		return Vue.axios.put(resource, params);
 	},
 
-	delete(resource, slug="", params="") {
-		return Vue.axios.delete(resource, slug, params).catch(error => {
-			throw new Error(`API error [DELETE] ${error}`);
-		});
+	delete(resource) {
+		return Vue.axios.delete(resource);
 	}
 };
 
@@ -61,7 +59,7 @@ export const GoalService = {
 	},
 
 	delete(id) {
-		return ApiService.delete(this.RSRC, id);
+		return ApiService.delete(`${this.RSRC}/${id}`);
 	}
 };
 
@@ -69,6 +67,7 @@ export const HistoryService = {
 	get RSRC() {return "history"},
 
 	getAll() {
+		ApiService.setHeader();
 		return ApiService.get(this.RSRC);
 	},
 
@@ -76,12 +75,14 @@ export const HistoryService = {
 		return ApiService.get(this.RSRC, id);
 	},
 
-	create(goal_id, value) {
-		return ApiService.post(this.RSRC, "", {value: value, goal_id: goal_id});
+	create(payload) {
+		ApiService.setHeader();
+		return ApiService.post(this.RSRC, payload);
 	},
 
-	update(id, value) {
-		return ApiService.put(this.RSRC, id, {value: value});
+	update(id, payload) {
+		ApiService.setHeader();
+		return ApiService.put(`${this.RSRC}/${id}`, payload);
 	},
 
 	delete(id) {

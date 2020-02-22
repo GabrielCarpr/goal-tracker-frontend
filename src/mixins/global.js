@@ -1,19 +1,8 @@
 import Vue from 'vue';
+import { convertDate } from "@/utils/";
 
 Vue.mixin({
 	methods: {
-		findProgress(goal, percent=false) {
-			const history = goal.history;
-			if (!history.length || history.length == 0) {
-				return percent ? "0%" : 0;
-			}
-			if (goal.goal_type == "total") {
-				let latest = history.reduce((prev, curr) => {
-					return new Date(prev.date) < new Date(curr.date) ? curr : prev;
-				});
-				return percent ? Math.floor((latest.value / goal.goal_value) * 100) + "%" : latest.value;
-			}
-		},
 		gravatarUrl(email) {
 			// MD5 (Message-Digest Algorithm) by WebToolkit
 
@@ -26,15 +15,6 @@ Vue.mixin({
 
 			return "https://www.gravatar.com/avatar/" + hash + "?default=" + dflt;
 		},
-		convertDate(date) {
-			date = new Date(date);
-
-			let dd = date.getDate();
-			let mm = date.getMonth() + 1;
-
-			return [(dd>9 ? '' : '0') + dd,
-					(mm>9 ? '' : '0') + mm,
-					date.getFullYear()].join('/');
-		}
+		convertDate: (date) => convertDate(date)
 	}
 })

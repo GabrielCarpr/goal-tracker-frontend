@@ -1,7 +1,7 @@
 <template>
 	<AppLayout>
 		<transition name="fade">
-		<LogModal v-if="logModalShow" @close="this.hideLogModal"/>
+		<LogModal v-if="logModalShow" @close="this.hideLogModal" @emitLog="addLog" :metric="thisGoal.metric" />
 		</transition>
 		<div class="section row">
 			<div class="info-panel">
@@ -49,7 +49,7 @@
 		<div class="section">
 			<h2>History</h2>
 			<HistoryItem v-for="hist in sortedHistory"
-						:key="hist.log_id"
+						:key="hist.id"
 						:history="hist" />
 		</div>
 	</AppLayout>
@@ -87,26 +87,30 @@ export default {
 		},
 		updateGoal() {
 			this.$store.dispatch("updateGoal", {id: this.goalId, payload: this.thisGoal});
+		},
+		addLog(value) {
+			this.$store.commit("addLog", {goal_id: this.goalId, value: value});
+			this.hideLogModal();
 		}
 	},
 	computed: {
 		goalId() {
-			return this.$route.params.goal_id
+			return this.$route.params.goal_id;
 		},
 		goalIndex() {
-			return this.$store.state.goals.findIndex(i => i.id == this.goalId)
+			return this.$store.state.goals.findIndex(i => i.id == this.goalId);
 		},
 		thisGoal() {
-			return this.$store.getters.getGoal(this.goalId)
+			return this.$store.getters.getGoal(this.goalId);
 		},
 		dueDate() {
-			return this.convertDate(this.thisGoal.due)
+			return this.convertDate(this.thisGoal.due);
 		},
 		progress() {
-			return this.findProgress(this.thisGoal, true) 
+			return this.$store.getters.findProgress(this.goalId, true);
 		},
 		sortedHistory() {
-			let temphist = Object(this.thisGoal.history);
+			let temphist = [...this.thisGoal.history];
 			temphist = temphist.sort((a, b) => new Date(a.date) > new Date(b.date) ? 1 : -1);
 			return temphist;
 		},
