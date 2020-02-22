@@ -1,9 +1,13 @@
 import router from "@/router";
-import { GoalService } from "@/api/api.service";
+import { GoalService, HistoryService } from "@/api/api.service";
 import ApiService from "@/api/api.service";
 import AuthService from "@/api/AuthService";
 
 export const actions = {
+	/*
+	* Auth
+	*/
+
 	// Login action: sends request and deals with authentication
 	async login(context, credentials) {
 		context.commit("setAuthErrors", {});
@@ -67,6 +71,10 @@ export const actions = {
 		}
 	},
 
+	/*
+	* Goals
+	*/
+
 	// Loads all goals
 	async getAllGoals(context) {
 		const { data } = await GoalService.getAll();
@@ -75,6 +83,7 @@ export const actions = {
 		return context.commit("stopLoading", 500);
 	},
 
+	// Adds a single goal
 	addGoal(context, payload) {
 		return GoalService.create(payload)
 			.then(({ data }) => {
@@ -83,10 +92,26 @@ export const actions = {
 			});
 	},
 
+	// Overwrites any fields in a goal from the payload
 	updateGoal(context, { id, payload }) {
 		return GoalService.update(id, payload)
 			.then(({ data }) => {
 				context.commit("updateGoal", data)
+				return data;
+			});
+	},
+
+	/* 
+	* History
+	*/
+
+	// Inserts a new log into a goal
+	addLog(context, { goal_id, value }) {
+		context.commit("addLog", {goal_id: goal_id, value: value});
+
+		return HistoryService.create(goal_id, value)
+			.then(({ data }) => {
+				context.commit("updatePendingLog", data);
 				return data;
 			});
 	}

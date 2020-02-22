@@ -75,9 +75,9 @@ export const HistoryService = {
 		return ApiService.get(this.RSRC, id);
 	},
 
-	create(payload) {
+	create(goal_id, value) {
 		ApiService.setHeader();
-		return ApiService.post(this.RSRC, payload);
+		return ApiService.post(this.RSRC, {goal_id: goal_id, value: value});
 	},
 
 	update(id, payload) {

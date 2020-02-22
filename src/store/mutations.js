@@ -54,6 +54,14 @@ export const mutations = {
 		Vue.set(state.goals, goal_index, Object.assign(state.goals[goal_index], {history: current_history}));
 	},
 
+	// Updates a pending (id null) log from a request
+	updatePendingLog(state, payload) {
+		const goal_index = state.goals.findIndex(el => el.id == payload.goal_id);
+		const history_index = state.goals[goal_index].history.findIndex(el => el.id == null);
+
+		Vue.set(state.goals[goal_index].history, history_index, payload);
+	},
+
 	/* 
 	* Misc 
 	*/

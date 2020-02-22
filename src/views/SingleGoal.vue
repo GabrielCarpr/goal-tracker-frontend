@@ -89,7 +89,7 @@ export default {
 			this.$store.dispatch("updateGoal", {id: this.goalId, payload: this.thisGoal});
 		},
 		addLog(value) {
-			this.$store.commit("addLog", {goal_id: this.goalId, value: value});
+			this.$store.dispatch("addLog", {goal_id: this.goalId, value: value});
 			this.hideLogModal();
 		}
 	},
