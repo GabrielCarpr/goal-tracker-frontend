@@ -1,8 +1,23 @@
 <template>
 	<AppLayout>
 		<transition name="fade">
-		<LogModal v-if="logModalShow" @close="this.hideLogModal" @emitLog="addLog" :metric="thisGoal.metric" />
+		<LogModal v-if="logModalShow" 
+				@close="this.hideLogModal" 
+				@emitLog="addLog" 
+				:metric="thisGoal.metric" 
+				:name="thisGoal.name"/>
 		</transition>
+
+		<transition name="fade">
+		<UpdateLogModal v-if="updateModalShow" 
+						:metric="thisGoal.metric" 
+						:name="thisGoal.name" 
+						@close="hideUpdateModal" 
+						@emitValue="addUpdate"
+						:value_original="selHistory.value"
+						:id="selHistory.id" />
+		</transition>
+
 		<div class="section row">
 			<div class="info-panel">
 				<span class="info-row"><span>Due date: </span>{{ dueDate }}</span>
@@ -50,7 +65,8 @@
 			<h2>History</h2>
 			<HistoryItem v-for="hist in sortedHistory"
 						:key="hist.id"
-						:history="hist" />
+						:history="hist" 
+						@click.native="showUpdateModal(hist.value, hist.id)" />
 		</div>
 	</AppLayout>
 </template>
@@ -61,6 +77,7 @@ import Vision from "@/components/Vision";
 import Affirmation from "@/components/Affirmation";
 import HistoryItem from "@/components/HistoryItem";
 import LogModal from "@/components/LogModal";
+import UpdateLogModal from "@/components/UpdateLogModal";
 
 export default {
 	name: "SingleGoal",
@@ -69,11 +86,17 @@ export default {
 		Vision,
 		AppLayout,
 		HistoryItem,
-		LogModal
+		LogModal,
+		UpdateLogModal
 	},
 	data: () => {
 		return {
-			logModalShow: false
+			logModalShow: false,
+			updateModalShow: false,
+			selHistory: {
+				value: null,
+				id: null
+			}
 		}
 	},
 	methods: {
@@ -85,12 +108,28 @@ export default {
 			this.logModalShow = false;
 			document.getElementsByTagName("body")[0].classList.remove("noscroll");
 		},
+		showUpdateModal(value, id) {
+			this.updateModalShow = true;
+			this.selHistory.value = value;
+			this.selHistory.id = id;
+			document.getElementsByTagName("body")[0].classList.add("noscroll");
+		},
+		hideUpdateModal() {
+			this.updateModalShow = false;
+			this.selHistory.value = null;
+			this.selHistory.id = null;
+			document.getElementsByTagName("body")[0].classList.remove("noscroll");
+		},
 		updateGoal() {
 			this.$store.dispatch("updateGoal", {id: this.goalId, payload: this.thisGoal});
 		},
 		addLog(value) {
 			this.$store.dispatch("addLog", {goal_id: this.goalId, value: value});
 			this.hideLogModal();
+		},
+		addUpdate(value) {
+			console.log(value);
+			this.hideUpdateModal();
 		}
 	},
 	computed: {

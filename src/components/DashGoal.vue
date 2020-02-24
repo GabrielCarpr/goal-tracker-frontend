@@ -7,7 +7,7 @@
                 <span class="progress">{{ this.progress }}</span>
                 <span class="metric">{{ goal.metric }}</span>
             </div>
-            <span class="due-tag">Due {{ convertDate(goal.date) }}</span>
+            <span class="due-tag">Due {{ convertDate(goal.due) }}</span>
         </div>
     </div>
 </template>

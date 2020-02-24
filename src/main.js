@@ -12,6 +12,14 @@ require("./validation.js");
 Vue.component("ValidationProvider", ValidationProvider);
 Vue.component("ValidationObserver", ValidationObserver);
 
+
+/* Creates v-init directive which allows you to set an initial value to a component */
+Vue.directive('init', {
+	bind: function(el, binding, vnode) {
+		vnode.context[binding.arg] = binding.value;
+	}
+});
+
 Vue.config.productionTip = false
 
 ApiService.init();

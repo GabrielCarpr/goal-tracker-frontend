@@ -79,7 +79,7 @@ export default {
     },
     computed: {
         formattedDate() {
-            return this.convertDate(this.history.date)
+            return this.convertDate(this.history.created_at)
         }
     }
 }

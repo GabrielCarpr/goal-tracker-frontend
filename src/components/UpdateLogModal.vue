@@ -2,8 +2,12 @@
 	<div class="modal-overlay" @click="this.close">
 		<div class="log-modal" @click.stop>
 			<div class="log-header">{{ name }} <span class="log-close" @click="this.close">&times;</span></div>
-			<input autofocus class="log-input" type="number" v-model="value"><span class="log-metric">{{ metric }}</span>
-			<button type="button" class="log-submit" @click="emitValue">Save log</button>
+			<input autofocus class="log-input" type="number" v-model="value" v-init:value="value_original">
+			<span class="log-metric">{{ metric }}</span>
+			<span class="button-row">
+				<button type="button" class="btn log-submit" @click="emitValue">Save log</button>
+				<button type="button" class="btn log-del">Del</button>
+			</span>
 		</div>
 	</div>
 </template>
@@ -18,6 +22,14 @@ export default {
 		},
 		name: {
 			type: String,
+			required: true
+		},
+		value_original: {
+			type: Number,
+			required: true
+		},
+		id: {
+			type: Number,
 			required: true
 		}
 	},
@@ -96,21 +108,40 @@ export default {
 		text-align: right;
 	}
 
-	.log-submit {
-		color: VAR(--light-grey);
-		background-color: VAR(--main-blue);
-		font-size: 23px;
+	.button-row {
 		width: 100%;
 		height: 50px;
-		text-align: center;
-		border-radius: 0 0 5px 5px;
+	}
+
+	.btn {
 		outline: none;
 		border: none;
 		cursor: pointer;
+		text-align: center;
+		color: VAR(--light-grey);
+		font-size: 23px;
 		transition: background-color ease-in-out 200ms;
+	}
+
+	.log-submit {
+		background-color: VAR(--main-blue);
+		width: 70%;
+		height: 100%;
+		border-radius: 0 0 0 5px;
 	}
 
 	.log-submit:hover {
 		background-color: VAR(--dark-blue);
+	}
+
+	.log-del {
+		background-color: #B40F0F;
+		width: 30%;
+		height: 100%;
+		border-radius: 0 0 5px 0;
+	}
+
+	.log-del:hover {
+		background-color: rgb(119, 13, 13);
 	}
 </style>
