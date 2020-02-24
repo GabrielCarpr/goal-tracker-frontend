@@ -62,6 +62,14 @@ export const mutations = {
 		Vue.set(state.goals[goal_index].history, history_index, payload);
 	},
 
+	/* Updates a given log */
+	updateLog(state, payload) {
+		const goal_index = state.goals.findIndex(el => el.id == payload.goal_id);
+		const history_index = state.goals[goal_index].history.findIndex(el => el.id == payload.id);
+
+		Vue.set(state.goals[goal_index].history, history_index, payload);
+	},
+
 	/* 
 	* Misc 
 	*/

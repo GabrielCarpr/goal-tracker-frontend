@@ -13,7 +13,7 @@
 						:metric="thisGoal.metric" 
 						:name="thisGoal.name" 
 						@close="hideUpdateModal" 
-						@emitValue="addUpdate"
+						@emitLog="updateLog"
 						:value_original="selHistory.value"
 						:id="selHistory.id" />
 		</transition>
@@ -127,9 +127,11 @@ export default {
 			this.$store.dispatch("addLog", {goal_id: this.goalId, value: value});
 			this.hideLogModal();
 		},
-		addUpdate(value) {
-			console.log(value);
+		updateLog(value, id) {
+			this.$store.dispatch("updateLog", {id: id, value: value});
 			this.hideUpdateModal();
+			this.selHistory.id = null;
+			this.selHistory.value = null;
 		}
 	},
 	computed: {

@@ -80,9 +80,9 @@ export const HistoryService = {
 		return ApiService.post(this.RSRC, {goal_id: goal_id, value: value});
 	},
 
-	update(id, payload) {
+	update(id, value) {
 		ApiService.setHeader();
-		return ApiService.put(`${this.RSRC}/${id}`, payload);
+		return ApiService.put(`${this.RSRC}/${id}`, {value: value});
 	},
 
 	delete(id) {

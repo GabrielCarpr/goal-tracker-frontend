@@ -114,5 +114,14 @@ export const actions = {
 				context.commit("updatePendingLog", data);
 				return data;
 			});
+	},
+
+	// Updates a goal's log
+	updateLog(context, { id, value }) {
+		return HistoryService.update(id, value)
+			.then(({ data }) => {
+				context.commit("updateLog", data);
+				return data;
+			});
 	}
 }

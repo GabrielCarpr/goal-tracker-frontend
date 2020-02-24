@@ -43,7 +43,7 @@ export default {
 			this.$emit("close");
 		},
 		emitValue() {
-			this.$emit("emitLog", this.value);
+			this.$emit("emitLog", this.value, this.id);
 		}
 	}
 }
