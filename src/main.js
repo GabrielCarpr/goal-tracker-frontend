@@ -8,6 +8,7 @@ import { ValidationProvider, ValidationObserver } from 'vee-validate';
 
 require("./global.css");
 require("./validation.js");
+require("./filters");
 
 Vue.component("ValidationProvider", ValidationProvider);
 Vue.component("ValidationObserver", ValidationObserver);

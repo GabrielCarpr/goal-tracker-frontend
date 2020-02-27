@@ -1,5 +1,5 @@
 <template>
-	<Modal @submit="createGoal" @close="close">
+	<Modal @submit="createGoal" @close="close" button="Create goal">
 		<span class="subheading">What do you want to achieve?</span>
 		<div class="section">
 			<div class="step"><span>1</span></div>

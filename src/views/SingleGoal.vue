@@ -5,7 +5,7 @@
 				@close="this.hideLogModal" 
 				@emitLog="addLog" 
 				:metric="thisGoal.metric" 
-				:name="thisGoal.name"/>
+				:name="thisGoal.name" />
 		</transition>
 
 		<transition name="fade">
@@ -23,6 +23,7 @@
 				<span class="info-row"><span>Due date: </span>{{ dueDate }}</span>
 				<span class="info-row"><span>Progress: </span>{{ progress }}</span>
 				<span class="info-row"><span>Goal: </span>{{ thisGoal.description }}</span>
+				<span class="info-row"><span>Goal type: </span>{{ thisGoal.goal_type|capitalize }}</span>
 				<span class="info-row"><span>Category: </span><div class="badge badge-blue">Money</div></span>
 				<span class="info-row"><span>Display on dashboard: </span>
 					<label class="switch">
