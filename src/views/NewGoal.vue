@@ -1,48 +1,39 @@
 <template>
-	<div class="container">
-		<DesktopMenu />
-		<div class="form-column">
-			<h1>New goal</h1>
-			<span class="subheading">What do you want to achieve?</span>
-			<div class="section">
-				<div class="step"><span>1</span></div>
-				<input type="text" class="input" placeholder="Goal name" v-model="goal.name">
-				<textarea class="input" placeholder="Goal description" v-model="goal.description"></textarea>
-			</div>
-
-			<div class="section">
-				<div class="step"><span>2</span></div>
-				<input type="text" class="input" placeholder="Goal measured by..." v-model="goal.metric">
-				<input type="number" class="input" placeholder="Goal value" v-model="goal.goal_value">
-				<input type="date" class="input" placeholder="Goal date" v-model="goal.due">
-				<select class="input" v-model="goal.type">
-					<option disabled selected>Goal type</option>
-					<option value="total">Total</option>
-					<option value="average">Average</option>
-				</select>
-				<select class="input" v-if="goal.type == 'average'" v-model="goal.time_period">
-					<option disabled selected>Time period</option>
-					<option value="log">Log</option>
-					<option value="day">Day</option>
-					<option value="week">Week</option>
-					<option value="month">Month</option>
-					<option value="year">Year</option>
-				</select>
-				<button type="button" class="btn btn-blue" style="align-self: center;" @click="createGoal">Create goal</button>
-			</div>
+	<Modal @submit="createGoal" @close="close">
+		<span class="subheading">What do you want to achieve?</span>
+		<div class="section">
+			<div class="step"><span>1</span></div>
+			<input type="text" class="input" placeholder="Goal name" v-model="goal.name">
+			<textarea class="input" placeholder="Goal description" v-model="goal.description"></textarea>
 		</div>
-	</div>
+
+		<div class="section">
+			<div class="step"><span>2</span></div>
+			<input type="text" class="input" placeholder="Goal measured by..." v-model="goal.metric">
+			<input type="number" class="input" placeholder="Goal value" v-model="goal.goal_value">
+			<input type="date" class="input" placeholder="Goal date" v-model="goal.due">
+			<select class="input" v-model="goal.type">
+				<option disabled selected>Goal type</option>
+				<option value="total">Total</option>
+				<option value="average">Average</option>
+			</select>
+			<select class="input" v-if="goal.type == 'average'" v-model="goal.time_period">
+				<option disabled selected>Time period</option>
+				<option value="log">Log</option>
+				<option value="day">Day</option>
+				<option value="week">Week</option>
+				<option value="month">Month</option>
+				<option value="year">Year</option>
+			</select>
+		</div>
+	</Modal>
 </template>
 
 <style scoped>
-	.container {
-		width: CALC(100% - 250px);
-		margin: 0 0 0 auto;
-	}
 
 	.form-column {
 		margin-top: 55px;
-		width: 500px;
+		width: 450px;
 		height: auto;
 		display: flex;
 		flex-direction: column;
@@ -66,7 +57,7 @@
 		width: 100%;
 		display: flex;
 		flex-direction: column;
-		padding-bottom: 110px;
+		padding-bottom: 50px;
 		align-items: stretch;
 		box-sizing: border-box;
 	}
@@ -113,12 +104,12 @@
 </style>
 
 <script>
-import DesktopMenu from "@/components/DesktopMenu";
+import Modal from "@/components/Modal";
 
 export default {
 	name: "NewGoal",
 	components: {
-		DesktopMenu
+		Modal
 	},
 	data() {
 		return {
@@ -145,12 +136,15 @@ export default {
 			this.goal.due = this._due_date;
 			this.$store.dispatch("addGoal", this.goal)
 				.then((data) => {
-					console.log(data);
+					this.stopBodyScroll(false);
 					this.$router.push({name: "SingleGoal", params: {goal_id: data.id}})
 				})
 				.catch(error => {
 					this.error = error.response.data.error;
 				});
+		},
+		close() {
+			this.$emit("close");
 		}
 	},
 	computed: {

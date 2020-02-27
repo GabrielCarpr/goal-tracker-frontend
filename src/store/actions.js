@@ -75,10 +75,9 @@ export const actions = {
 	* Goals
 	*/
 
-	// Loads all goals
+	// Loads all goals (for use at initial application load)
 	async getAllGoals(context) {
 		const { data } = await GoalService.getAll();
-		console.log(data);
 		context.commit("setGoals", data);
 		return context.commit("stopLoading", 500);
 	},

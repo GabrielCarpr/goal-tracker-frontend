@@ -15,6 +15,16 @@ Vue.mixin({
 
 			return "https://www.gravatar.com/avatar/" + hash + "?default=" + dflt;
 		},
-		convertDate: (date) => convertDate(date)
+		convertDate: (date) => convertDate(date),
+
+		// Disables scroll on body for modals
+		stopBodyScroll(value = false) {
+			let body = document.getElementsByTagName("body")[0]
+			if (value) {
+				body.classList.add("noscroll");
+			} else if (!value) {
+				body.classList.remove("noscroll");
+			}
+		}
 	}
 })
