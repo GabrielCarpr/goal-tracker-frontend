@@ -37,8 +37,13 @@ export const mutations = {
 	},
 
 	updateGoal(state, data) {
-		let index = state.goals.findIndex(el => el.id === data.id);
+		let index = state.goals.findIndex(el => el.id == data.id);
 		Vue.set(state.goals, index, {...state.goals[index], ...data});
+	},
+
+	deleteGoal(state, id) {
+		let index = state.goals.findIndex(el => el.id == id);
+		Vue.delete(state.goals, index);
 	},
 
 	/* 

@@ -44,8 +44,8 @@ export const actions = {
 
 	// Logout action: clears all auth data and redirects to login
 	logout(context) {
-		context.commit("purgeAuth");
 		router.push("/login");
+		context.commit("purgeAuth");
 	},
 
 	// Checks whether authenticated and gets user details if necessary
@@ -98,6 +98,12 @@ export const actions = {
 				context.commit("updateGoal", data)
 				return data;
 			});
+	},
+
+	// Deletes a goal and goes to dashboard
+	deleteGoal(context, id) {
+		context.commit("deleteGoal", id);
+		return GoalService.delete(id);
 	},
 
 	/* 

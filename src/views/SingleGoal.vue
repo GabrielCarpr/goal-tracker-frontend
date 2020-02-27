@@ -41,6 +41,7 @@
 			</div>
 		</div>
 
+		<!--
 		<div class="section">
 			<h2>Vision</h2>
 			<div class="visions-holder">
@@ -61,6 +62,7 @@
 				<Affirmation></Affirmation>
 			</div>
 		</div>
+		-->
 
 		<div class="section">
 			<h2>History</h2>
@@ -68,14 +70,16 @@
 						:key="hist.id"
 						:history="hist" 
 						@click.native="showUpdateModal(hist.value, hist.id)" />
+
+			<button class="btn btn-blue" @click="deleteGoal">Delete goal</button>
 		</div>
 	</AppLayout>
 </template>
 
 <script>
 import AppLayout from "@/views/AppLayout";
-import Vision from "@/components/Vision";
-import Affirmation from "@/components/Affirmation";
+//import Vision from "@/components/Vision";
+//import Affirmation from "@/components/Affirmation";
 import HistoryItem from "@/components/HistoryItem";
 import LogModal from "@/components/LogModal";
 import UpdateLogModal from "@/components/UpdateLogModal";
@@ -83,8 +87,6 @@ import UpdateLogModal from "@/components/UpdateLogModal";
 export default {
 	name: "SingleGoal",
 	components: {
-		Affirmation,
-		Vision,
 		AppLayout,
 		HistoryItem,
 		LogModal,
@@ -142,6 +144,11 @@ export default {
 			this.hideUpdateModal();
 			this.selHistory.id = null;
 			this.selHistory.value = null;
+		},
+		deleteGoal() {
+			this.$router.push({name: "Dashboard"});
+			this.$destroy();
+			this.$store.dispatch("deleteGoal", this.goalId);
 		}
 	},
 	computed: {

@@ -15,6 +15,7 @@
         <img id="pic" :src="gravatarUrl($store.state.user.email)" />
         <span>{{ this.$store.state.user.email || "Logged out" }}</span>
       </div>
+
       <span
         class="menu-item-box"
         :class="{'menu-active': this.$route.name == 'Dashboard'}"
@@ -23,6 +24,7 @@
         <img src="/dash_icon.svg" />
         <span class="menu-item">Dashboard</span>
       </span>
+
       <span
         class="menu-item-box"
         :class="{'menu-active': this.$route.name == 'Goals'}"
@@ -32,6 +34,8 @@
         <span class="menu-item">Goals</span>
         <span class="new-goal" @click.stop="showLogModal">&plus;</span>
       </span>
+
+      <!---
       <span
         class="menu-item-box"
         :class="{'menu-active': this.$route.name == 'Vision board'}"
@@ -40,6 +44,7 @@
         <img src="/vision_icon.svg" />
         <span class="menu-item">Vision board</span>
       </span>
+
       <span
         class="menu-item-box"
         :class="{'menu-active': this.$route.name == 'Affirmations'}"
@@ -48,6 +53,8 @@
         <img src="/affirmations_icon.svg" />
         <span class="menu-item">Affirmations</span>
       </span>
+      -->
+
       <div class="bottom-options">
         <span class="menu-item-box" @click="logout">
           &#8592;
