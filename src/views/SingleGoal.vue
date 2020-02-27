@@ -180,12 +180,12 @@ export default {
 	mounted: function() {
 		this.createGraph(".graph", this.goalId, this.thisGoal.metric, 
 						this.thisGoal.created_at, this.thisGoal.due,
-						this.thisGoal.goal_value);
+						this.thisGoal.goal_value, true);
 	},
 	updated: function() {
 		this.createGraph(".graph", this.goalId, this.thisGoal.metric, 
 						this.thisGoal.created_at, this.thisGoal.due,
-						this.thisGoal.goal_value);
+						this.thisGoal.goal_value, false);
 	}
 }
 </script>

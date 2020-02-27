@@ -30,7 +30,7 @@ Vue.mixin({
 		},
 
 		// Creates a graph on the specified element with the goal_id
-		createGraph(element, goal_id, metric, min, max, goal) {
+		createGraph(element, goal_id, metric, min, max, goal, animate) {
 			const ctx = document.querySelector(element);
 			if (!ctx) throw new Error("Chart canvas not found");
 			if (!goal_id) throw new Error("Please specify a goal ID");
@@ -51,6 +51,9 @@ Vue.mixin({
 				options: {
 					legend: {
 						display: false
+					},
+					animation: {
+						duration: animate ? 800 : 0
 					},
 					scales: {
 						xAxes: [{
@@ -81,6 +84,6 @@ Vue.mixin({
 					}
 				}
 			});
-		}
+		},
 	}
 })

@@ -30,7 +30,7 @@ export default {
     },
     mounted: function() {
         this.createGraph("#goal-" + this.goal.id, this.goal.id, this.goal.metric, this.goal.created_at,
-                        this.goal.due, this.goal.goal_value);
+                        this.goal.due, this.goal.goal_value, SVGComponentTransferFunctionElement);
     }
 }
 </script>
