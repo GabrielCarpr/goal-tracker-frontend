@@ -3,7 +3,8 @@
 			<div class="modal" @click.stop>
 				<slot></slot>
 				<div class="modal__footer">
-					<button @click="emitSubmit" class="btn btn-blue">{{ button }}</button>
+					<button v-if="handler" @click="handler(emitSubmit)" class="btn btn-blue">{{ button }}</button>
+					<button v-else @click="emitSubmit" class="btn btn-blue">{{ button }}</button>
 				</div>
 			</div>
 	</div>
@@ -24,6 +25,10 @@ export default {
 		button: {
 			type: String,
 			default: 'Save'
+		},
+		handler: {
+			type: Function,
+			required: false
 		}
 	}
 }

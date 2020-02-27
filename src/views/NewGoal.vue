@@ -1,32 +1,62 @@
 <template>
-	<Modal @submit="createGoal" @close="close" button="Create goal">
-		<span class="subheading">What do you want to achieve?</span>
-		<div class="section">
-			<div class="step"><span>1</span></div>
-			<input type="text" class="input" placeholder="Goal name" v-model="goal.name">
-			<textarea class="input" placeholder="Goal description" v-model="goal.description"></textarea>
-		</div>
+	<ValidationObserver v-slot="{ handleSubmit }">
+			<Modal @submit="createGoal" @close="close" button="Create goal" :handler="handleSubmit">
+			<span class="subheading">What do you want to achieve?</span>
+			<div class="section">
+				<div class="step"><span>1</span></div>
 
-		<div class="section">
-			<div class="step"><span>2</span></div>
-			<input type="text" class="input" placeholder="Goal measured by..." v-model="goal.metric">
-			<input type="number" class="input" placeholder="Goal value" v-model="goal.goal_value">
-			<input type="date" class="input" placeholder="Goal date" v-model="goal.due">
-			<select class="input" v-model="goal.type">
-				<option disabled selected>Goal type</option>
-				<option value="total">Total</option>
-				<option value="average">Average</option>
-			</select>
-			<select class="input" v-if="goal.type == 'average'" v-model="goal.time_period">
-				<option disabled selected>Time period</option>
-				<option value="log">Log</option>
-				<option value="day">Day</option>
-				<option value="week">Week</option>
-				<option value="month">Month</option>
-				<option value="year">Year</option>
-			</select>
-		</div>
-	</Modal>
+				<ValidationProvider rules="required|min:3" v-slot="{ errors }">
+					<input type="text" class="input" placeholder="Goal name" v-model="goal.name">
+					<span>{{ errors[0] }}</span>
+				</ValidationProvider>
+
+				<ValidationProvider rules="required|min:3" v-slot="{ errors }">
+					<textarea class="input" placeholder="Goal description" v-model="goal.description"></textarea>
+					<span>{{ errors[0] }}</span>
+				</ValidationProvider>
+			</div>
+
+			<div class="section">
+				<div class="step"><span>2</span></div>
+
+				<ValidationProvider rules="required" v-slot="{ errors }">
+					<input type="text" class="input" placeholder="Goal measured by..." v-model="goal.metric">
+					<span>{{ errors[0] }}</span>
+				</ValidationProvider>
+
+				<ValidationProvider rules="required" v-slot="{ errors }">
+					<input type="number" class="input" placeholder="Goal value" v-model="goal.goal_value">
+					<span>{{ errors[0] }}</span>
+				</ValidationProvider>
+
+				<ValidationProvider rules="required" v-slot="{ errors }">
+					<input type="date" class="input" placeholder="Goal date" v-model="goal.due">
+					<span>{{ errors[0] }}</span>
+				</ValidationProvider>
+
+				<ValidationProvider rules="required" v-slot="{ errors }">
+					<select class="input" v-model="goal.type">
+						<option disabled selected>Goal type</option>
+						<option value="total">Total</option>
+						<option value="average">Average</option>
+					</select>
+				<span>{{ errors[0] }}</span>
+				</ValidationProvider>
+
+				<ValidationProvider rules="required" v-slot="{ errors }">
+					<select class="input" v-if="goal.type == 'average'" v-model="goal.time_period">
+						<option disabled selected>Time period</option>
+						<option value="log">Log</option>
+						<option value="day">Day</option>
+						<option value="week">Week</option>
+						<option value="month">Month</option>
+						<option value="year">Year</option>
+					</select>
+					<span>{{ errors[0] }}</span>
+				</ValidationProvider>
+			</div>
+		</Modal>
+	</ValidationObserver>
 </template>
 
 <style scoped>
