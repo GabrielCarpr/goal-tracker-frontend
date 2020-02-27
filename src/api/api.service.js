@@ -86,6 +86,6 @@ export const HistoryService = {
 	},
 
 	delete(id) {
-		return ApiService.delete(this.RSRC, id);
+		return ApiService.delete(`${this.RSRC}/${id}`);
 	}
 };

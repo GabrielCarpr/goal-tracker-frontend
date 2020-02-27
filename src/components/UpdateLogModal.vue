@@ -6,7 +6,7 @@
 			<span class="log-metric">{{ metric }}</span>
 			<span class="button-row">
 				<button type="button" class="btn log-submit" @click="emitValue">Save log</button>
-				<button type="button" class="btn log-del">Del</button>
+				<button type="button" class="btn log-del" @click="emitDelete">Del</button>
 			</span>
 		</div>
 	</div>
@@ -44,6 +44,9 @@ export default {
 		},
 		emitValue() {
 			this.$emit("emitLog", this.value, this.id);
+		},
+		emitDelete() {
+			this.$emit("delete");
 		}
 	}
 }

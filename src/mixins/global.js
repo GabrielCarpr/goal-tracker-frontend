@@ -1,4 +1,6 @@
 import Vue from 'vue';
+import Chart from 'chart.js';
+import store from "@/store";
 import { convertDate } from "@/utils/";
 
 Vue.mixin({
@@ -25,6 +27,60 @@ Vue.mixin({
 			} else if (!value) {
 				body.classList.remove("noscroll");
 			}
+		},
+
+		// Creates a graph on the specified element with the goal_id
+		createGraph(element, goal_id, metric, min, max, goal) {
+			const ctx = document.querySelector(element);
+			if (!ctx) throw new Error("Chart canvas not found");
+			if (!goal_id) throw new Error("Please specify a goal ID");
+
+			const data = store.getters.getHistoryData(goal_id);
+
+			new Chart(ctx, {
+				type: 'line',
+				data: {
+					datasets: [{
+						data: data,
+						label: metric,
+						backgroundColor: 'rgba(0, 0, 0, 0)',
+						borderColor: 'rgba(255, 255, 255, 0.5)',
+						pointHitRadius: 10
+					}]
+				},
+				options: {
+					legend: {
+						display: false
+					},
+					scales: {
+						xAxes: [{
+							display: false,
+							type: 'time',
+							distribution: 'linear',
+							time: {
+								unit: 'day',
+								tooltipFormat: 'MMM D YYYY'
+							},
+							ticks: {
+								min: new Date(min).setHours(0, 0, 0),
+								max: max
+							}
+						}],
+						yAxes: [{
+							display: false,
+							ticks: {
+								max: goal
+							}
+						}]
+					},
+					gridLines: {
+						display: false
+					},
+					ticks: {
+						source: 'auto'
+					}
+				}
+			});
 		}
 	}
 })

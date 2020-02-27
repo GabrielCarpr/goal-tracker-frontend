@@ -70,6 +70,14 @@ export const mutations = {
 		Vue.set(state.goals[goal_index].history, history_index, payload);
 	},
 
+	// Delete log
+	deleteLog(state, { goal_id, history_id }) {
+		const goal_index = state.goals.findIndex(el => el.id == goal_id);
+		const history_index = state.goals[goal_index].history.findIndex(el => el.id == history_id);
+
+		Vue.delete(state.goals[goal_index].history, history_index);
+	},
+
 	/* 
 	* Misc 
 	*/

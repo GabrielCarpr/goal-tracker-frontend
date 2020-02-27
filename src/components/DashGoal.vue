@@ -1,6 +1,8 @@
 <template>
     <div class="goal-card" @click="$router.push('/goals/' + goal.id)">
-        <div class="graph"></div>
+        <div class="graph-container">
+            <canvas class="graph" :id="'goal-' + goal.id"></canvas>
+        </div>
         <div class="goal-info">
             <span class="goal-name">{{ goal.name }}</span>
             <div class="goal-display">
@@ -25,6 +27,10 @@ export default {
         progress() {
             return this.$store.getters.findProgress(this.goal.id) + "/" + this.goal.goal_value;
         }
+    },
+    mounted: function() {
+        this.createGraph("#goal-" + this.goal.id, this.goal.id, this.goal.metric, this.goal.created_at,
+                        this.goal.due, this.goal.goal_value);
     }
 }
 </script>
@@ -53,11 +59,17 @@ export default {
     }
 
     .graph {
-        background: VAR(--dark-blue);
-        border-radius: 4px;
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+    
+    .graph-container {
+        width: 50%;
+        min-width: 300px;
         align-self: stretch;
-		width: 50%;
-		min-width: 300px;
+        border-radius: 4px;
+        background: VAR(--dark-blue);
     }
 
     .goal-info {

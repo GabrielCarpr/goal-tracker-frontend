@@ -122,5 +122,11 @@ export const actions = {
 				context.commit("updateLog", data);
 				return data;
 			});
+	},
+
+	// Delete a log
+	deleteLog(context, { goal_id, history_id }) {
+		context.commit("deleteLog", { goal_id, history_id });
+		return HistoryService.delete(history_id);
 	}
 }

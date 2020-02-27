@@ -9,20 +9,22 @@
 		</transition>
 
 		<transition name="fade">
-		<UpdateLogModal v-if="updateModalShow" 
-						:metric="thisGoal.metric" 
-						:name="thisGoal.name" 
-						@close="hideUpdateModal" 
-						@emitLog="updateLog"
-						:value_original="selHistory.value"
-						:id="selHistory.id" />
+			<UpdateLogModal v-if="updateModalShow" 
+							:metric="thisGoal.metric" 
+							:name="thisGoal.name" 
+							@close="hideUpdateModal" 
+							@emitLog="updateLog"
+							:value_original="selHistory.value"
+							:id="selHistory.id"
+							@delete="deleteLog" />
 		</transition>
 
 		<div class="section row">
 			<div class="info-panel">
 				<span class="info-row"><span>Due date: </span>{{ dueDate }}</span>
+				<span class="info-row"><span>Goal: </span>{{ thisGoal.goal_value }} {{ thisGoal.metric }}</span>
 				<span class="info-row"><span>Progress: </span>{{ progress }}</span>
-				<span class="info-row"><span>Goal: </span>{{ thisGoal.description }}</span>
+				<span class="info-row"><span>Description: </span>{{ thisGoal.description }}</span>
 				<span class="info-row"><span>Goal type: </span>{{ thisGoal.goal_type|capitalize }}</span>
 				<span class="info-row"><span>Category: </span><div class="badge badge-blue">Money</div></span>
 				<span class="info-row"><span>Display on dashboard: </span>
@@ -31,13 +33,11 @@
 					</label>
 				</span>
 				<div class="bottom-btn" style="width: 100%;">
-					<button class="btn btn-blue btn-block" id="edit-goal">Edit goal</button>
 					<button class="btn btn-blue btn-block" id="new-log" @click="showLogModal">Add new log</button>
 				</div>
 			</div>
 			<div class="graph-container">
-				<div class="graph">
-				</div>
+				<canvas class="graph"></canvas>
 			</div>
 		</div>
 
@@ -133,6 +133,15 @@ export default {
 			this.hideUpdateModal();
 			this.selHistory.id = null;
 			this.selHistory.value = null;
+		},
+		deleteLog() {
+			this.$store.dispatch("deleteLog", {
+				goal_id: this.goalId, 
+				history_id: this.selHistory.id
+			});
+			this.hideUpdateModal();
+			this.selHistory.id = null;
+			this.selHistory.value = null;
 		}
 	},
 	computed: {
@@ -168,6 +177,16 @@ export default {
 			}
 		}
 	},
+	mounted: function() {
+		this.createGraph(".graph", this.goalId, this.thisGoal.metric, 
+						this.thisGoal.created_at, this.thisGoal.due,
+						this.thisGoal.goal_value);
+	},
+	updated: function() {
+		this.createGraph(".graph", this.goalId, this.thisGoal.metric, 
+						this.thisGoal.created_at, this.thisGoal.due,
+						this.thisGoal.goal_value);
+	}
 }
 </script>
 
@@ -217,7 +236,7 @@ export default {
 		width: 55%;
 		min-width: 390px;
 		padding-left: 40px;
-		height: 400px;
+		height: 90%;
 		display: inline-block;
 		box-sizing: border-box;
 	}
